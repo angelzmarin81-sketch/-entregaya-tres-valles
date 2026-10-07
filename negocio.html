@@ -10,7 +10,7 @@
   content="width=device-width,initial-scale=1"
 >
 
-<title>EntregaYa · Negocio</title>
+<title>EntregaYa · JMA Hermanos</title>
 
 <link
   rel="stylesheet"
@@ -156,13 +156,14 @@ body{
   font-weight:600;
 }
 
-.edit-btn{
-  background:#eee;
-}
-
 .toggle-btn{
   background:#ede9fe;
   color:#5b35d5;
+}
+
+.delete-btn{
+  background:#fee2e2;
+  color:#991b1b;
 }
 
 .new-product{
@@ -185,8 +186,14 @@ body{
   font-size:14px;
 }
 
-.new-product input{
+.new-product input,
+.new-product select{
   width:100%;
+  padding:11px;
+  border:1px solid #d8dce5;
+  border-radius:9px;
+  background:white;
+  font:inherit;
 }
 
 .order-card{
@@ -259,6 +266,12 @@ body{
   color:#697386;
 }
 
+.empty{
+  padding:20px;
+  text-align:center;
+  color:#697386;
+}
+
 @media(max-width:700px){
 
   .business-header{
@@ -304,7 +317,7 @@ body{
   </div>
 
   <div>
-    🟢 Negocio activo
+    🟢 JMA Hermanos
   </div>
 
 </header>
@@ -320,7 +333,7 @@ body{
   </p>
 
   <h1>
-    Cocina La Vallesana 👋
+    JMA Hermanos 👋
   </h1>
 
   <p>
@@ -336,7 +349,7 @@ body{
   <div class="dashboard-card">
 
     <span>
-      Pedidos hoy
+      Pedidos
     </span>
 
     <strong id="todayOrders">
@@ -349,7 +362,7 @@ body{
   <div class="dashboard-card">
 
     <span>
-      Ventas de hoy
+      Ventas
     </span>
 
     <strong id="todaySales">
@@ -362,7 +375,7 @@ body{
   <div class="dashboard-card">
 
     <span>
-      Pendiente por recibir
+      Saldo del negocio
     </span>
 
     <strong id="businessBalance">
@@ -397,9 +410,7 @@ body{
 
   </div>
 
-  <div id="businessOrders">
-
-  </div>
+  <div id="businessOrders"></div>
 
 </section>
 
@@ -409,7 +420,7 @@ body{
   <div class="section-header">
 
     <h2>
-      🍔 Mis productos
+      🥗 Mis productos
     </h2>
 
     <button
@@ -431,6 +442,7 @@ body{
       Nuevo producto
     </h3>
 
+
     <label>
 
       Nombre
@@ -438,7 +450,7 @@ body{
       <input
         id="productName"
         type="text"
-        placeholder="Ej. Hamburguesa especial"
+        placeholder="Ej. Ensalada especial"
       >
 
     </label>
@@ -451,7 +463,8 @@ body{
       <input
         id="productPrice"
         type="number"
-        placeholder="120"
+        step="0.01"
+        placeholder="80"
       >
 
     </label>
@@ -461,11 +474,29 @@ body{
 
       Categoría
 
-      <input
-        id="productCategory"
-        type="text"
-        placeholder="Comida"
-      >
+      <select id="productCategory">
+
+        <option>
+          Ensaladas
+        </option>
+
+        <option>
+          Sándwiches
+        </option>
+
+        <option>
+          Jugos
+        </option>
+
+        <option>
+          Licuados
+        </option>
+
+        <option>
+          Otros
+        </option>
+
+      </select>
 
     </label>
 
@@ -480,9 +511,7 @@ body{
   </div>
 
 
-  <div id="products">
-
-  </div>
+  <div id="products"></div>
 
 </section>
 
@@ -540,10 +569,12 @@ body{
 
   </div>
 
+
   <p class="muted">
 
-    La comisión se descuenta
-    automáticamente de tus ventas.
+    La comisión de EntregaYa
+    se descuenta automáticamente
+    de las ventas.
 
   </p>
 
@@ -555,13 +586,26 @@ body{
 
 <script>
 
+
+/* =========================
+   CONFIGURACIÓN
+========================= */
+
+const BUSINESS_NAME =
+  "JMA Hermanos";
+
 const storageKey =
   "entregaya-demo";
+
+const productsKey =
+  "entregaya-products";
 
 
 let data =
   JSON.parse(
-    localStorage.getItem(storageKey) ||
+    localStorage.getItem(
+      storageKey
+    ) ||
     '{"cart":[],"orders":[]}'
   );
 
@@ -574,40 +618,47 @@ const money =
 
 
 /* =========================
-   PRODUCTOS
+   PRODUCTOS INICIALES
 ========================= */
 
-let products = [
+let defaultProducts = [
 
   {
     id:1,
-    name:"Hamburguesa",
-    price:120,
-    category:"Comida",
+    name:"Ensalada especial",
+    price:80,
+    category:"Ensaladas",
     active:true
   },
 
   {
     id:2,
-    name:"Alitas",
-    price:150,
-    category:"Comida",
+    name:"Sándwich de pollo",
+    price:75,
+    category:"Sándwiches",
     active:true
   },
 
   {
     id:3,
-    name:"Torta de pollo",
-    price:90,
-    category:"Comida",
+    name:"Jugo natural",
+    price:45,
+    category:"Jugos",
+    active:true
+  },
+
+  {
+    id:4,
+    name:"Licuado de fresa",
+    price:55,
+    category:"Licuados",
     active:true
   }
 
 ];
 
 
-const productsKey =
-  "entregaya-business-products";
+let products;
 
 
 const savedProducts =
@@ -623,8 +674,22 @@ if(savedProducts){
       savedProducts
     );
 
+}else{
+
+  products =
+    defaultProducts;
+
+  localStorage.setItem(
+    productsKey,
+    JSON.stringify(products)
+  );
+
 }
 
+
+/* =========================
+   GUARDAR PRODUCTOS
+========================= */
 
 function saveProducts(){
 
@@ -637,7 +702,7 @@ function saveProducts(){
 
 
 /* =========================
-   PRODUCTOS
+   MOSTRAR PRODUCTOS
 ========================= */
 
 function renderProducts(){
@@ -648,56 +713,99 @@ function renderProducts(){
     );
 
 
-  container.innerHTML =
-    products.map(product => `
+  if(!products.length){
 
-      <div class="product-row">
+    container.innerHTML = `
 
-        <div class="product-info">
+      <div class="empty">
 
-          <h3>
-            ${product.name}
-          </h3>
+        Todavía no tienes productos.
 
-          <p>
-            ${product.category}
-            ·
-            ${money(product.price)}
-          </p>
+        <br><br>
 
-          <p>
-
-            ${
-              product.active
-                ? "🟢 Disponible"
-                : "🔴 No disponible"
-            }
-
-          </p>
-
-        </div>
-
-
-        <div class="product-actions">
-
-          <button
-            class="small-btn toggle-btn"
-            onclick="toggleProduct(${product.id})"
-          >
-
-            ${
-              product.active
-                ? "Desactivar"
-                : "Activar"
-            }
-
-          </button>
-
-        </div>
+        Agrega tu primer producto.
 
       </div>
 
-    `).join("");
+    `;
+
+    document.getElementById(
+      "activeProducts"
+    ).textContent = "0";
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    products.map(
+      product => `
+
+        <div class="product-row">
+
+          <div class="product-info">
+
+            <h3>
+              ${product.name}
+            </h3>
+
+            <p>
+
+              ${product.category}
+
+              ·
+
+              <b>
+                ${money(product.price)}
+              </b>
+
+            </p>
+
+            <p>
+
+              ${
+                product.active
+                  ? "🟢 Disponible"
+                  : "🔴 No disponible"
+              }
+
+            </p>
+
+          </div>
+
+
+          <div class="product-actions">
+
+            <button
+              class="small-btn toggle-btn"
+              onclick="toggleProduct(${product.id})"
+            >
+
+              ${
+                product.active
+                  ? "Desactivar"
+                  : "Activar"
+              }
+
+            </button>
+
+
+            <button
+              class="small-btn delete-btn"
+              onclick="deleteProduct(${product.id})"
+            >
+
+              Eliminar
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `
+    ).join("");
 
 
   document.getElementById(
@@ -752,8 +860,7 @@ window.addProduct =
         .getElementById(
           "productCategory"
         )
-        .value
-        .trim();
+        .value;
 
 
     if(!name){
@@ -767,10 +874,10 @@ window.addProduct =
     }
 
 
-    if(!price){
+    if(price <= 0){
 
       alert(
-        "Escribe el precio."
+        "Escribe un precio válido."
       );
 
       return;
@@ -787,9 +894,7 @@ window.addProduct =
 
       price,
 
-      category:
-        category ||
-        "General",
+      category,
 
       active:true
 
@@ -811,13 +916,6 @@ window.addProduct =
     document
       .getElementById(
         "productPrice"
-      )
-      .value = "";
-
-
-    document
-      .getElementById(
-        "productCategory"
       )
       .value = "";
 
@@ -858,8 +956,47 @@ window.toggleProduct =
   };
 
 
+window.deleteProduct =
+  id => {
+
+    const product =
+      products.find(
+        item =>
+          item.id === id
+      );
+
+
+    if(!product)
+      return;
+
+
+    if(
+      !confirm(
+        "¿Eliminar este producto?"
+      )
+    ){
+
+      return;
+
+    }
+
+
+    products =
+      products.filter(
+        item =>
+          item.id !== id
+      );
+
+
+    saveProducts();
+
+    renderProducts();
+
+  };
+
+
 /* =========================
-   PEDIDOS
+   PEDIDOS DEL NEGOCIO
 ========================= */
 
 function renderOrders(){
@@ -871,16 +1008,24 @@ function renderOrders(){
 
 
   const orders =
-    data.orders || [];
+    (data.orders || [])
+      .filter(
+        order =>
+          order.business ===
+          BUSINESS_NAME
+      );
 
 
   if(!orders.length){
 
     container.innerHTML = `
 
-      <p class="muted">
-        Todavía no hay pedidos.
-      </p>
+      <div class="empty">
+
+        📦 Todavía no hay pedidos
+        para JMA Hermanos.
+
+      </div>
 
     `;
 
@@ -987,6 +1132,17 @@ function renderOrders(){
               <br>
 
               <b>
+                Teléfono:
+              </b>
+
+              ${
+                customer.phone ||
+                "No registrado"
+              }
+
+              <br>
+
+              <b>
                 Dirección:
               </b>
 
@@ -996,6 +1152,21 @@ function renderOrders(){
               }
 
               <br>
+
+              ${
+                customer.reference
+                  ? `
+                    <b>
+                      Referencia:
+                    </b>
+
+                    ${customer.reference}
+
+                    <br>
+                  `
+                  : ""
+              }
+
 
               <b>
                 Productos:
@@ -1013,10 +1184,18 @@ function renderOrders(){
               <br>
 
               <b>
-                Total:
+                Venta:
               </b>
 
-              ${money(order.total)}
+              ${money(order.subtotal)}
+
+              <br>
+
+              <b>
+                Forma de pago:
+              </b>
+
+              ${order.payment || "Efectivo"}
 
             </div>
 
@@ -1032,6 +1211,10 @@ function renderOrders(){
 
 }
 
+
+/* =========================
+   ACCIONES DEL NEGOCIO
+========================= */
 
 window.acceptOrder =
   id => {
@@ -1127,7 +1310,12 @@ window.readyOrder =
 function renderFinance(){
 
   const orders =
-    data.orders || [];
+    (data.orders || [])
+      .filter(
+        order =>
+          order.business ===
+          BUSINESS_NAME
+      );
 
 
   const validOrders =
