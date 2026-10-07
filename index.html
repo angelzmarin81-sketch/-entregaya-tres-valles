@@ -1,811 +1,1232 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EntregaYa - Tres Valles</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>EntregaYa - Tres Valles</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
-      color: #222;
-    }
+<style>
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 18px;
-      text-align: center;
-    }
+*{
+box-sizing:border-box;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f6f8;
+color:#222;
+}
 
-    header p {
-      margin: 5px 0 0;
-      color: #d1d5db;
-    }
+header{
+background:#111827;
+color:white;
+padding:20px;
+text-align:center;
+}
 
-    nav {
-      display: flex;
-      gap: 8px;
-      padding: 10px;
-      background: white;
-      overflow-x: auto;
-      border-bottom: 1px solid #ddd;
-    }
+header h1{
+margin:0;
+font-size:30px;
+}
 
-    nav button {
-      border: none;
-      background: #e5e7eb;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
+header p{
+margin:6px 0 0;
+color:#d1d5db;
+}
 
-    nav button.active {
-      background: #111827;
-      color: white;
-    }
+nav{
+display:flex;
+gap:8px;
+padding:10px;
+background:white;
+border-bottom:1px solid #ddd;
+overflow-x:auto;
+}
 
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+nav button{
+border:0;
+padding:10px 15px;
+border-radius:8px;
+background:#e5e7eb;
+white-space:nowrap;
+}
 
-    .hero {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
+nav button.active{
+background:#111827;
+color:white;
+}
 
-    .hero h2 {
-      margin-top: 0;
-    }
+main{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
 
-    .business-card {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
 
-    .business-card h3 {
-      margin-top: 0;
-    }
+button{
+cursor:pointer;
+border:0;
+border-radius:8px;
+padding:11px 16px;
+background:#111827;
+color:white;
+font-size:15px;
+}
 
-    .business-card button,
-    .product button,
-    .cart button,
-    .confirm-button {
-      background: #111827;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+button.secondary{
+background:#6b7280;
+}
 
-    .product {
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.06);
-    }
+.hidden{
+display:none;
+}
 
-    .product h4 {
-      margin: 0 0 5px;
-    }
+.product{
+background:white;
+padding:18px;
+border-radius:12px;
+margin-bottom:12px;
+box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
 
-    .product p {
-      color: #666;
-      margin: 5px 0;
-    }
+.product h3{
+margin-top:0;
+}
 
-    .price {
-      font-weight: bold;
-      font-size: 18px;
-      margin: 10px 0;
-    }
+.price{
+font-size:19px;
+font-weight:bold;
+margin:10px 0;
+}
 
-    .quantity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-    }
+.quantity{
+display:flex;
+align-items:center;
+gap:12px;
+margin:12px 0;
+}
 
-    .quantity button {
-      width: 35px;
-      height: 35px;
-      padding: 0;
-    }
+.quantity button{
+width:38px;
+height:38px;
+padding:0;
+font-size:20px;
+}
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 11px;
-      margin: 6px 0 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
+.quantity span{
+font-size:18px;
+font-weight:bold;
+min-width:25px;
+text-align:center;
+}
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
+textarea,
+input,
+select{
+width:100%;
+padding:11px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+margin:6px 0 12px;
+}
 
-    .cart {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
+label{
+font-weight:bold;
+display:block;
+margin-top:10px;
+}
 
-    .cart-item {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
+.cart{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
 
-    .total {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 15px 0;
-    }
+.cart-item{
+border-bottom:1px solid #ddd;
+padding:12px 0;
+}
 
-    .hidden {
-      display: none;
-    }
+.total{
+font-size:19px;
+font-weight:bold;
+margin:12px 0;
+}
 
-    .back {
-      background: #6b7280 !important;
-      margin-bottom: 15px;
-    }
+.success{
+background:#ecfdf5;
+border:1px solid #10b981;
+padding:20px;
+border-radius:12px;
+}
 
-    .success {
-      background: #ecfdf5;
-      border: 1px solid #10b981;
-      padding: 20px;
-      border-radius: 12px;
-    }
-
-    .empty {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>EntregaYa</h1>
-  <p>Tu delivery local en Tres Valles</p>
+
+<h1>EntregaYa</h1>
+
+<p>Tu delivery local en Tres Valles</p>
+
 </header>
 
+
 <nav>
-  <button class="active" onclick="mostrarInicio()">Comprar</button>
-  <button onclick="mostrarMensaje('Negocio')">Negocio</button>
-  <button onclick="mostrarMensaje('Repartidor')">Repartidor</button>
-  <button onclick="mostrarMensaje('Administración')">Administración</button>
+
+<button onclick="inicio()">Comprar</button>
+
+<button onclick="proximamente('Negocio')">
+Negocio
+</button>
+
+<button onclick="proximamente('Repartidor')">
+Repartidor
+</button>
+
+<button onclick="proximamente('Administración')">
+Administración
+</button>
+
 </nav>
+
 
 <main>
 
-  <!-- INICIO -->
-  <section id="inicio">
 
-    <div class="hero">
-      <h2>¿Qué quieres pedir hoy?</h2>
-      <p>Compra en negocios locales y recibe tu pedido en Tres Valles.</p>
-    </div>
+<!-- INICIO -->
 
-    <h2>Negocios disponibles</h2>
+<section id="inicio">
 
-    <div class="business-card">
-      <h3>JMA Hermanos</h3>
-      <p>Comida, bebidas y productos preparados.</p>
-      <button onclick="abrirJMA()">Ver productos</button>
-    </div>
+<div class="card">
 
-    <div class="business-card">
-      <h3>Próximamente</h3>
-      <p>Más negocios locales se estarán incorporando a EntregaYa.</p>
-    </div>
+<h2>¿Qué quieres pedir hoy?</h2>
 
-  </section>
+<p>
+Compra en negocios locales y recibe tu pedido en Tres Valles.
+</p>
+
+</div>
 
 
-  <!-- JMA -->
-  <section id="jma" class="hidden">
-
-    <button class="back" onclick="mostrarInicio()">← Volver a negocios</button>
-
-    <div class="hero">
-      <h2>JMA Hermanos</h2>
-      <p>Selecciona tus productos.</p>
-    </div>
-
-    <div id="productosJMA"></div>
-
-    <div id="carrito" class="cart hidden">
-
-      <h2>Tu pedido</h2>
-
-      <div id="carritoItems"></div>
-
-      <div class="total">
-        Subtotal: $<span id="subtotal">0.00</span>
-      </div>
-
-      <div class="total">
-        Envío: $30.00
-      </div>
-
-      <div class="total">
-        Total: $<span id="total">30.00</span>
-      </div>
-
-      <h3>Datos de entrega</h3>
-
-      <label>Nombre</label>
-      <input id="nombre" type="text" placeholder="Tu nombre">
-
-      <label>Teléfono</label>
-      <input id="telefono" type="tel" placeholder="Tu teléfono">
-
-      <label>Dirección</label>
-      <input id="direccion" type="text" placeholder="Calle, número, colonia">
-
-      <label>Referencia</label>
-      <textarea id="referencia" placeholder="Ej. Casa color azul, frente a..."></textarea>
-
-      <label>Forma de pago</label>
-      <select id="pago">
-        <option value="Efectivo">Efectivo</option>
-        <option value="Transferencia">Transferencia</option>
-      </select>
-
-      <button class="confirm-button" onclick="confirmarPedido()">
-        Confirmar pedido
-      </button>
-
-    </div>
-
-  </section>
+<h2>Negocios disponibles</h2>
 
 
-  <!-- MENSAJE -->
-  <section id="mensaje" class="hidden">
+<div class="card">
 
-    <div class="hero">
-      <h2 id="tituloMensaje"></h2>
-      <p>Esta sección la construiremos en el siguiente paso.</p>
-    </div>
+<h2>JMA Hermanos</h2>
 
-    <button onclick="mostrarInicio()">← Volver</button>
+<p>
+Comida, bebidas y productos preparados.
+</p>
 
-  </section>
+<button onclick="abrirJMA()">
+Ver productos
+</button>
+
+</div>
 
 
-  <!-- ÉXITO -->
-  <section id="exito" class="hidden">
+<div class="card">
 
-    <div class="success">
-      <h2>🎉 ¡Pedido recibido!</h2>
+<h3>Próximamente</h3>
 
-      <p>
-        Tu pedido fue enviado correctamente a JMA Hermanos.
-      </p>
+<p>
+Más negocios locales se estarán incorporando a EntregaYa.
+</p>
 
-      <p>
-        Número de pedido:
-        <strong id="numeroPedido"></strong>
-      </p>
+</div>
 
-      <p>
-        El negocio deberá aceptar y preparar tu pedido.
-      </p>
+</section>
 
-      <button onclick="mostrarInicio()">Volver a comprar</button>
-    </div>
 
-  </section>
+
+<!-- JMA -->
+
+<section id="jma" class="hidden">
+
+<button
+class="secondary"
+onclick="inicio()">
+
+← Volver
+
+</button>
+
+
+<div class="card">
+
+<h2>JMA Hermanos</h2>
+
+<p>
+Selecciona los productos que deseas pedir.
+</p>
+
+</div>
+
+
+<div id="productos"></div>
+
+
+<!-- CARRITO -->
+
+<div
+id="carrito"
+class="cart hidden">
+
+<h2>🛒 Tu pedido</h2>
+
+<div id="itemsCarrito"></div>
+
+<div class="total">
+
+Subtotal:
+$<span id="subtotal">0.00</span>
+
+</div>
+
+<div>
+
+Envío:
+<strong>$30.00</strong>
+
+</div>
+
+<div class="total">
+
+Total:
+$<span id="total">30.00</span>
+
+</div>
+
+
+<h3>Datos de entrega</h3>
+
+
+<label>
+Nombre
+</label>
+
+<input
+id="nombre"
+type="text"
+placeholder="Tu nombre">
+
+
+<label>
+Teléfono
+</label>
+
+<input
+id="telefono"
+type="tel"
+placeholder="Tu teléfono">
+
+
+<label>
+Dirección
+</label>
+
+<input
+id="direccion"
+type="text"
+placeholder="Calle, número, colonia">
+
+
+<label>
+Referencia
+</label>
+
+<textarea
+id="referencia"
+placeholder="Ej. casa azul, frente a la tienda...">
+</textarea>
+
+
+<label>
+Forma de pago
+</label>
+
+<select id="pago">
+
+<option value="Efectivo">
+Efectivo
+</option>
+
+<option value="Transferencia">
+Transferencia
+</option>
+
+</select>
+
+
+<button
+onclick="confirmarPedido()">
+
+Confirmar pedido
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ÉXITO -->
+
+<section
+id="exito"
+class="hidden">
+
+<div class="success">
+
+<h2>
+🎉 ¡Pedido recibido!
+</h2>
+
+<p>
+Tu pedido fue enviado correctamente a JMA Hermanos.
+</p>
+
+<p>
+
+Número de pedido:
+
+<strong id="numeroPedido"></strong>
+
+</p>
+
+<button onclick="inicio()">
+
+Volver a comprar
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- PRÓXIMAMENTE -->
+
+<section
+id="proximamente"
+class="hidden">
+
+<div class="card">
+
+<h2 id="tituloProximamente"></h2>
+
+<p>
+Esta sección la construiremos en el siguiente paso.
+</p>
+
+<button onclick="inicio()">
+Volver
+</button>
+
+</div>
+
+</section>
+
 
 </main>
 
 
+
 <script>
 
-const STORAGE_PRODUCTOS = "entregaya-jma-products";
-const STORAGE_PEDIDOS = "entregaya-demo";
+console.log("EntregaYa funcionando");
+
+
+const PRODUCTOS_KEY =
+"entregaya-jma-products";
+
+const PEDIDOS_KEY =
+"entregaya-demo";
+
 
 let carrito = [];
 
 
-/* =========================
-   NAVEGACIÓN
-========================= */
-
-function ocultarTodo() {
-  document.getElementById("inicio").classList.add("hidden");
-  document.getElementById("jma").classList.add("hidden");
-  document.getElementById("mensaje").classList.add("hidden");
-  document.getElementById("exito").classList.add("hidden");
-}
-
-
-function mostrarInicio() {
-  ocultarTodo();
-  document.getElementById("inicio").classList.remove("hidden");
-}
-
-
-function mostrarMensaje(nombre) {
-  ocultarTodo();
-
-  document.getElementById("tituloMensaje").textContent =
-    nombre;
-
-  document.getElementById("mensaje").classList.remove("hidden");
-}
-
 
 /* =========================
-   JMA
+NAVEGACIÓN
 ========================= */
 
-function abrirJMA() {
+function ocultarTodo(){
 
-  ocultarTodo();
+document
+.getElementById("inicio")
+.classList
+.add("hidden");
 
-  document.getElementById("jma").classList.remove("hidden");
+document
+.getElementById("jma")
+.classList
+.add("hidden");
 
-  cargarProductos();
+document
+.getElementById("exito")
+.classList
+.add("hidden");
+
+document
+.getElementById("proximamente")
+.classList
+.add("hidden");
+
 }
 
 
-function obtenerProductos() {
+function inicio(){
 
-  let productos = localStorage.getItem(STORAGE_PRODUCTOS);
+ocultarTodo();
 
-  if (!productos) {
+document
+.getElementById("inicio")
+.classList
+.remove("hidden");
 
-    productos = [
-
-      {
-        id: "jma-1",
-        name: "Ensalada César",
-        description: "Lechuga, pollo, jitomate, queso y aderezo César.",
-        price: 80,
-        category: "Ensaladas",
-        active: true
-      },
-
-      {
-        id: "jma-2",
-        name: "Ensalada especial",
-        description: "Ensalada preparada con ingredientes frescos.",
-        price: 85,
-        category: "Ensaladas",
-        active: true
-      },
-
-      {
-        id: "jma-3",
-        name: "Sándwich de pollo",
-        description: "Pan, pollo, lechuga, jitomate y aderezo.",
-        price: 75,
-        category: "Sándwiches",
-        active: true
-      },
-
-      {
-        id: "jma-4",
-        name: "Jugo natural",
-        description: "Jugo natural preparado al momento.",
-        price: 45,
-        category: "Jugos",
-        active: true
-      },
-
-      {
-        id: "jma-5",
-        name: "Licuado de fresa",
-        description: "Licuado de fresa preparado al momento.",
-        price: 55,
-        category: "Licuados",
-        active: true
-      }
-
-    ];
-
-    localStorage.setItem(
-      STORAGE_PRODUCTOS,
-      JSON.stringify(productos)
-    );
-  }
-
-  return JSON.parse(productos);
 }
 
 
-function cargarProductos() {
+function proximamente(nombre){
 
-  const contenedor =
-    document.getElementById("productosJMA");
+ocultarTodo();
 
-  const productos =
-    obtenerProductos().filter(p => p.active !== false);
+document
+.getElementById("tituloProximamente")
+.textContent =
+nombre;
 
-  if (!productos.length) {
+document
+.getElementById("proximamente")
+.classList
+.remove("hidden");
 
-    contenedor.innerHTML = `
-      <div class="empty">
-        <h3>No hay productos disponibles</h3>
-        <p>JMA Hermanos todavía no tiene productos activos.</p>
-      </div>
-    `;
-
-    return;
-  }
-
-
-  contenedor.innerHTML = productos.map(producto => `
-
-    <div class="product">
-
-      <h4>${producto.name}</h4>
-
-      <p>${producto.description || ""}</p>
-
-      <div class="price">
-        $${Number(producto.price).toFixed(2)}
-      </div>
-
-      <div class="quantity">
-
-        <button onclick="cambiarCantidad('${producto.id}', -1)">
-          −
-        </button>
-
-        <strong id="cantidad-${producto.id}">0</strong>
-
-        <button onclick="cambiarCantidad('${producto.id}', 1)">
-          +
-        </button>
-
-      </div>
-
-      <textarea
-        id="nota-${producto.id}"
-        placeholder="¿Alguna indicación especial?"
-      ></textarea>
-
-      <button onclick="agregarAlCarrito('${producto.id}')">
-        Agregar al pedido
-      </button>
-
-    </div>
-
-  `).join("");
 }
+
 
 
 /* =========================
-   CANTIDADES
+JMA
 ========================= */
 
-function cambiarCantidad(id, cambio) {
+function abrirJMA(){
 
-  const elemento =
-    document.getElementById("cantidad-" + id);
+ocultarTodo();
 
-  let cantidad =
-    Number(elemento.textContent);
+document
+.getElementById("jma")
+.classList
+.remove("hidden");
 
-  cantidad += cambio;
+cargarProductos();
 
-  if (cantidad < 0) {
-    cantidad = 0;
-  }
-
-  elemento.textContent = cantidad;
 }
+
 
 
 /* =========================
-   CARRITO
+PRODUCTOS
 ========================= */
 
-function agregarAlCarrito(id) {
+function obtenerProductos(){
 
-  const productos = obtenerProductos();
-
-  const producto =
-    productos.find(p => p.id === id);
-
-  if (!producto) return;
+let datos =
+localStorage.getItem(PRODUCTOS_KEY);
 
 
-  const cantidad =
-    Number(
-      document.getElementById("cantidad-" + id).textContent
-    );
+if(datos){
 
-  if (cantidad <= 0) {
+try{
 
-    alert("Primero selecciona una cantidad.");
+return JSON.parse(datos);
 
-    return;
-  }
+}catch(error){
 
+console.log(
+"Error leyendo productos",
+error
+);
 
-  const nota =
-    document.getElementById("nota-" + id).value;
+}
 
-
-  const existente =
-    carrito.find(item => item.productId === id);
-
-
-  if (existente) {
-
-    existente.quantity = cantidad;
-    existente.specialRequest = nota;
-
-  } else {
-
-    carrito.push({
-
-      productId: producto.id,
-
-      business: "JMA Hermanos",
-
-      name: producto.name,
-
-      price: Number(producto.price),
-
-      quantity: cantidad,
-
-      specialRequest: nota
-
-    });
-
-  }
-
-
-  actualizarCarrito();
-
-  alert("Producto agregado al pedido.");
 }
 
 
-function actualizarCarrito() {
+/*
+Productos de respaldo.
+Esto permite que JMA aparezca
+aunque todavía no existan
+productos guardados.
+*/
 
-  const contenedor =
-    document.getElementById("carritoItems");
+const productos = [
 
-  const carritoBox =
-    document.getElementById("carrito");
+{
+id:"jma-1",
+name:"Ensalada César",
+description:
+"Lechuga, pollo, jitomate, queso y aderezo César.",
+price:80,
+category:"Ensaladas",
+active:true
+},
 
+{
+id:"jma-2",
+name:"Ensalada especial",
+description:
+"Ensalada preparada con ingredientes frescos.",
+price:85,
+category:"Ensaladas",
+active:true
+},
 
-  if (!carrito.length) {
+{
+id:"jma-3",
+name:"Sándwich de pollo",
+description:
+"Pan, pollo, lechuga, jitomate y aderezo.",
+price:75,
+category:"Sándwiches",
+active:true
+},
 
-    carritoBox.classList.add("hidden");
+{
+id:"jma-4",
+name:"Jugo natural",
+description:
+"Jugo natural preparado al momento.",
+price:45,
+category:"Jugos",
+active:true
+},
 
-    return;
-  }
-
-
-  carritoBox.classList.remove("hidden");
-
-
-  contenedor.innerHTML =
-    carrito.map((item, index) => `
-
-      <div class="cart-item">
-
-        <strong>${item.name}</strong>
-
-        <br>
-
-        ${item.quantity} × $${item.price.toFixed(2)}
-
-        <br>
-
-        ${item.specialRequest
-          ? "Nota: " + item.specialRequest
-          : ""}
-
-        <br><br>
-
-        <button onclick="eliminarDelCarrito(${index})">
-          Eliminar
-        </button>
-
-      </div>
-
-    `).join("");
-
-
-  const subtotal =
-    carrito.reduce(
-      (total, item) =>
-        total + item.price * item.quantity,
-      0
-    );
-
-
-  document.getElementById("subtotal").textContent =
-    subtotal.toFixed(2);
-
-
-  document.getElementById("total").textContent =
-    (subtotal + 30).toFixed(2);
+{
+id:"jma-5",
+name:"Licuado de fresa",
+description:
+"Licuado de fresa preparado al momento.",
+price:55,
+category:"Licuados",
+active:true
 }
 
+];
 
-function eliminarDelCarrito(index) {
 
-  carrito.splice(index, 1);
+localStorage.setItem(
+PRODUCTOS_KEY,
+JSON.stringify(productos)
+);
 
-  actualizarCarrito();
+
+return productos;
+
 }
+
 
 
 /* =========================
-   PEDIDO
+MOSTRAR PRODUCTOS
 ========================= */
 
-function confirmarPedido() {
+function cargarProductos(){
 
-  if (!carrito.length) {
-
-    alert("Tu carrito está vacío.");
-
-    return;
-  }
+const contenedor =
+document.getElementById("productos");
 
 
-  const nombre =
-    document.getElementById("nombre").value.trim();
-
-  const telefono =
-    document.getElementById("telefono").value.trim();
-
-  const direccion =
-    document.getElementById("direccion").value.trim();
-
-  const referencia =
-    document.getElementById("referencia").value.trim();
-
-  const pago =
-    document.getElementById("pago").value;
+const productos =
+obtenerProductos()
+.filter(
+producto =>
+producto.active !== false
+);
 
 
-  if (!nombre || !telefono || !direccion) {
-
-    alert(
-      "Por favor completa nombre, teléfono y dirección."
-    );
-
-    return;
-  }
+contenedor.innerHTML =
+"";
 
 
-  const subtotal =
-    carrito.reduce(
-      (total, item) =>
-        total + item.price * item.quantity,
-      0
-    );
+productos.forEach(
+producto => {
 
 
-  const pedido = {
-
-    id:
-      "EY-" +
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      ),
-
-    business:
-      "JMA Hermanos",
-
-    items:
-      [...carrito],
-
-    subtotal:
-      subtotal,
-
-    delivery:
-      30,
-
-    commission:
-      subtotal * 0.10,
-
-    total:
-      subtotal + 30,
-
-    payment:
-      pago,
-
-    customer: {
-
-      name:
-        nombre,
-
-      phone:
-        telefono,
-
-      address:
-        direccion,
-
-      reference:
-        referencia
-
-    },
-
-    status:
-      "Nuevo",
-
-    rider:
-      null,
-
-    date:
-      new Date().toISOString()
-
-  };
+const div =
+document.createElement("div");
 
 
-  const pedidosGuardados =
-    JSON.parse(
-      localStorage.getItem(STORAGE_PEDIDOS) || "[]"
-    );
+div.className =
+"product";
 
 
-  pedidosGuardados.push(pedido);
+div.innerHTML = `
+
+<h3>
+${producto.name}
+</h3>
+
+<p>
+${producto.description || ""}
+</p>
+
+<div class="price">
+$${Number(producto.price).toFixed(2)}
+</div>
+
+<div class="quantity">
+
+<button
+onclick="cambiarCantidad('${producto.id}',-1)">
+−
+</button>
+
+<span
+id="cantidad-${producto.id}">
+0
+</span>
+
+<button
+onclick="cambiarCantidad('${producto.id}',1)">
++
+</button>
+
+</div>
 
 
-  localStorage.setItem(
-    STORAGE_PEDIDOS,
-    JSON.stringify(pedidosGuardados)
-  );
+<textarea
+id="nota-${producto.id}"
+placeholder="Indicación especial (opcional)">
+</textarea>
 
 
-  document.getElementById("numeroPedido").textContent =
-    pedido.id;
+<button
+onclick="agregarProducto('${producto.id}')">
+
+Agregar al pedido
+
+</button>
+
+`;
 
 
-  carrito = [];
+contenedor.appendChild(div);
 
-  ocultarTodo();
-
-  document.getElementById("exito").classList.remove("hidden");
+});
 
 }
+
+
+
+/* =========================
+CANTIDAD
+========================= */
+
+function cambiarCantidad(
+id,
+cambio
+){
+
+const elemento =
+document.getElementById(
+"cantidad-" + id
+);
+
+
+let cantidad =
+Number(elemento.textContent);
+
+
+cantidad =
+cantidad + cambio;
+
+
+if(cantidad < 0){
+
+cantidad = 0;
+
+}
+
+
+elemento.textContent =
+cantidad;
+
+}
+
+
+
+/* =========================
+AGREGAR
+========================= */
+
+function agregarProducto(id){
+
+console.log(
+"Agregando producto:",
+id
+);
+
+
+const productos =
+obtenerProductos();
+
+
+const producto =
+productos.find(
+p => p.id === id
+);
+
+
+if(!producto){
+
+alert(
+"No se encontró el producto."
+);
+
+return;
+
+}
+
+
+const cantidad =
+Number(
+document
+.getElementById(
+"cantidad-" + id
+)
+.textContent
+);
+
+
+if(cantidad <= 0){
+
+alert(
+"Primero selecciona la cantidad."
+);
+
+return;
+
+}
+
+
+const nota =
+document
+.getElementById(
+"nota-" + id
+)
+.value;
+
+
+const existente =
+carrito.find(
+item =>
+item.productId === id
+);
+
+
+if(existente){
+
+existente.quantity =
+cantidad;
+
+existente.specialRequest =
+nota;
+
+}else{
+
+carrito.push({
+
+productId:
+producto.id,
+
+business:
+"JMA Hermanos",
+
+name:
+producto.name,
+
+price:
+Number(producto.price),
+
+quantity:
+cantidad,
+
+specialRequest:
+nota
+
+});
+
+}
+
+
+actualizarCarrito();
+
+
+alert(
+"Producto agregado al pedido."
+);
+
+}
+
+
+
+/* =========================
+ACTUALIZAR CARRITO
+========================= */
+
+function actualizarCarrito(){
+
+const carritoBox =
+document.getElementById(
+"carrito"
+);
+
+
+const contenedor =
+document.getElementById(
+"itemsCarrito"
+);
+
+
+if(carrito.length === 0){
+
+carritoBox
+.classList
+.add("hidden");
+
+return;
+
+}
+
+
+carritoBox
+.classList
+.remove("hidden");
+
+
+contenedor.innerHTML =
+"";
+
+
+carrito.forEach(
+(item,index) => {
+
+const div =
+document.createElement("div");
+
+
+div.className =
+"cart-item";
+
+
+div.innerHTML = `
+
+<strong>
+${item.name}
+</strong>
+
+<br>
+
+${item.quantity}
+×
+$${item.price.toFixed(2)}
+
+<br>
+
+${
+item.specialRequest
+?
+"Nota: " +
+item.specialRequest
+:
+""
+}
+
+<br><br>
+
+<button
+onclick="eliminarProducto(${index})">
+
+Eliminar
+
+</button>
+
+`;
+
+
+contenedor.appendChild(div);
+
+});
+
+
+const subtotal =
+carrito.reduce(
+(total,item) =>
+total +
+(item.price *
+item.quantity),
+0
+);
+
+
+document
+.getElementById("subtotal")
+.textContent =
+subtotal.toFixed(2);
+
+
+document
+.getElementById("total")
+.textContent =
+(subtotal + 30)
+.toFixed(2);
+
+}
+
+
+
+/* =========================
+ELIMINAR
+========================= */
+
+function eliminarProducto(index){
+
+carrito.splice(
+index,
+1
+);
+
+actualizarCarrito();
+
+}
+
+
+
+/* =========================
+CONFIRMAR
+========================= */
+
+function confirmarPedido(){
+
+console.log(
+"Intentando confirmar pedido..."
+);
+
+
+if(carrito.length === 0){
+
+alert(
+"Tu pedido está vacío."
+);
+
+return;
+
+}
+
+
+const nombre =
+document
+.getElementById("nombre")
+.value
+.trim();
+
+
+const telefono =
+document
+.getElementById("telefono")
+.value
+.trim();
+
+
+const direccion =
+document
+.getElementById("direccion")
+.value
+.trim();
+
+
+const referencia =
+document
+.getElementById("referencia")
+.value
+.trim();
+
+
+const pago =
+document
+.getElementById("pago")
+.value;
+
+
+if(
+!nombre ||
+!telefono ||
+!direccion
+){
+
+alert(
+"Completa nombre, teléfono y dirección."
+);
+
+return;
+
+}
+
+
+const subtotal =
+carrito.reduce(
+(total,item) =>
+total +
+(item.price *
+item.quantity),
+0
+);
+
+
+const pedido = {
+
+id:
+"EY-" +
+Math.floor(
+100000 +
+Math.random() *
+900000
+),
+
+business:
+"JMA Hermanos",
+
+items:
+JSON.parse(
+JSON.stringify(carrito)
+),
+
+subtotal:
+subtotal,
+
+delivery:
+30,
+
+commission:
+subtotal * 0.10,
+
+total:
+subtotal + 30,
+
+payment:
+pago,
+
+customer:{
+
+name:
+nombre,
+
+phone:
+telefono,
+
+address:
+direccion,
+
+reference:
+referencia
+
+},
+
+status:
+"Nuevo",
+
+rider:
+null,
+
+date:
+new Date().toISOString()
+
+};
+
+
+let pedidos = [];
+
+
+try{
+
+pedidos =
+JSON.parse(
+localStorage.getItem(
+PEDIDOS_KEY
+) || "[]"
+);
+
+}catch(error){
+
+console.log(
+"Error leyendo pedidos",
+error
+);
+
+}
+
+
+pedidos.push(
+pedido
+);
+
+
+localStorage.setItem(
+PEDIDOS_KEY,
+JSON.stringify(pedidos)
+);
+
+
+console.log(
+"Pedido guardado:",
+pedido
+);
+
+
+document
+.getElementById(
+"numeroPedido"
+)
+.textContent =
+pedido.id;
+
+
+carrito = [];
+
+
+ocultarTodo();
+
+
+document
+.getElementById("exito")
+.classList
+.remove("hidden");
+
+}
+
+
+
+inicio();
 
 </script>
 
