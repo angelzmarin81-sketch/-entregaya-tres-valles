@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EntregaYa · Demo Tres Valles</title>
+<title>EntregaYa · Tres Valles</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -12,7 +12,7 @@
 <header>
   <div>
     <b>EntregaYa</b>
-    <span> · Demo Tres Valles</span>
+    <span> · Tres Valles</span>
   </div>
 
   <nav>
@@ -30,17 +30,19 @@
   <div class="hero">
     <p class="eyebrow">DELIVERY GENERAL</p>
     <h1>Lo que necesites, hasta tu puerta.</h1>
-    <p>Compra en negocios locales de Tres Valles y prueba el flujo completo.</p>
+    <p>Compra en negocios locales de Tres Valles.</p>
   </div>
 
   <div id="businesses" class="grid"></div>
 
   <aside class="cart">
+
     <h2>🛒 Tu pedido</h2>
 
     <div id="cartItems"></div>
 
     <div class="totals">
+
       <span>Productos</span>
       <b id="subtotal">$0</b>
 
@@ -52,37 +54,77 @@
 
       <strong>Total</strong>
       <strong id="total">$0</strong>
+
     </div>
+
+    <h3>📍 Datos de entrega</h3>
+
+    <label>
+      Nombre
+      <input id="customerName" type="text"
+        placeholder="Nombre del cliente">
+    </label>
+
+    <label>
+      Teléfono
+      <input id="customerPhone" type="tel"
+        placeholder="Número de teléfono">
+    </label>
+
+    <label>
+      Dirección
+      <input id="customerAddress" type="text"
+        placeholder="Calle, número y colonia">
+    </label>
+
+    <label>
+      Referencia
+      <input id="customerReference" type="text"
+        placeholder="Ej. casa azul, frente al parque">
+    </label>
 
     <label>
       Método de pago
+
       <select id="payment">
         <option>Efectivo</option>
         <option>Tarjeta (demo)</option>
       </select>
+
     </label>
 
     <button class="primary" id="orderBtn">
-      Confirmar pedido demo
+      Confirmar pedido
     </button>
+
   </aside>
 
 </section>
 
+
 <section id="negocio" class="panel">
-  <h1>Portal del negocio</h1>
+
+  <h1>🏪 Portal del negocio</h1>
+
   <div id="businessOrders" class="cards"></div>
+
 </section>
 
+
 <section id="repartidor" class="panel">
-  <h1>Portal del repartidor</h1>
+
+  <h1>🛵 Portal del repartidor</h1>
+
   <div id="riderStats" class="stats"></div>
+
   <div id="riderOrders" class="cards"></div>
+
 </section>
+
 
 <section id="admin" class="panel">
 
-  <h1>Administración</h1>
+  <h1>📊 Administración</h1>
 
   <div id="adminStats" class="stats"></div>
 
@@ -132,7 +174,8 @@
 
   </div>
 
-  <h2>Movimientos</h2>
+  <h2>💰 Movimientos</h2>
+
   <div id="ledger"></div>
 
   <button class="danger" id="reset">
