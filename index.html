@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EntregaYa · Demo Tres Valles</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header>
+  <div>
+    <b>EntregaYa</b>
+    <span> · Demo Tres Valles</span>
+  </div>
+
+  <nav>
+    <button class="tab active" data-tab="cliente">Cliente</button>
+    <button class="tab" data-tab="negocio">Negocio</button>
+    <button class="tab" data-tab="repartidor">Repartidor</button>
+    <button class="tab" data-tab="admin">Administración</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="cliente" class="panel active">
+
+  <div class="hero">
+    <p class="eyebrow">DELIVERY GENERAL</p>
+    <h1>Lo que necesites, hasta tu puerta.</h1>
+    <p>Compra en negocios locales de Tres Valles y prueba el flujo completo.</p>
+  </div>
+
+  <div id="businesses" class="grid"></div>
+
+  <aside class="cart">
+    <h2>🛒 Tu pedido</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="totals">
+      <span>Productos</span>
+      <b id="subtotal">$0</b>
+
+      <span>Envío</span>
+      <b id="delivery">$0</b>
+
+      <span>Comisión plataforma</span>
+      <b id="commission">$0</b>
+
+      <strong>Total</strong>
+      <strong id="total">$0</strong>
+    </div>
+
+    <label>
+      Método de pago
+      <select id="payment">
+        <option>Efectivo</option>
+        <option>Tarjeta (demo)</option>
+      </select>
+    </label>
+
+    <button class="primary" id="orderBtn">
+      Confirmar pedido demo
+    </button>
+  </aside>
+
+</section>
+
+<section id="negocio" class="panel">
+  <h1>Portal del negocio</h1>
+  <div id="businessOrders" class="cards"></div>
+</section>
+
+<section id="repartidor" class="panel">
+  <h1>Portal del repartidor</h1>
+  <div id="riderStats" class="stats"></div>
+  <div id="riderOrders" class="cards"></div>
+</section>
+
+<section id="admin" class="panel">
+
+  <h1>Administración</h1>
+
+  <div id="adminStats" class="stats"></div>
+
+  <div class="sim">
+
+    <h2>Simulador de rentabilidad</h2>
+
+    <div class="formgrid">
+
+      <label>
+        Pedidos/día
+        <input id="sOrders" type="number" value="40">
+      </label>
+
+      <label>
+        Días/mes
+        <input id="sDays" type="number" value="30">
+      </label>
+
+      <label>
+        Ticket promedio
+        <input id="sTicket" type="number" value="180">
+      </label>
+
+      <label>
+        Envío al cliente
+        <input id="sDelivery" type="number" value="30">
+      </label>
+
+      <label>
+        Comisión %
+        <input id="sComm" type="number" value="10">
+      </label>
+
+      <label>
+        Costos fijos
+        <input id="sFixed" type="number" value="12000">
+      </label>
+
+    </div>
+
+    <button class="primary" id="simulate">
+      Calcular
+    </button>
+
+    <div id="profit"></div>
+
+  </div>
+
+  <h2>Movimientos</h2>
+  <div id="ledger"></div>
+
+  <button class="danger" id="reset">
+    Reiniciar demo
+  </button>
+
+</section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
