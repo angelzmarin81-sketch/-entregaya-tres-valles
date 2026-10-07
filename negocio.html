@@ -102,17 +102,21 @@ body{
   color:white;
 }
 .product-row{
-  padding:16px 0;
+  padding:18px 0;
   border-top:1px solid #eee;
 }
 .product-top{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  gap:15px;
+  gap:20px;
+}
+.product-info{
+  flex:1;
 }
 .product-info h3{
-  margin:0 0 5px;
+  margin:0 0 6px;
+  font-size:18px;
 }
 .product-info p{
   margin:5px 0;
@@ -120,13 +124,14 @@ body{
   font-size:14px;
 }
 .product-description{
-  color:#4b5563 !important;
+  color:#374151 !important;
   line-height:1.5;
 }
 .product-actions{
   display:flex;
   gap:7px;
   flex-wrap:wrap;
+  justify-content:flex-end;
 }
 .small-btn{
   border:0;
@@ -134,6 +139,10 @@ body{
   padding:8px 10px;
   cursor:pointer;
   font-weight:600;
+}
+.edit-btn{
+  background:#eef2ff;
+  color:#4338ca;
 }
 .toggle-btn{
   background:#ede9fe;
@@ -143,41 +152,59 @@ body{
   background:#fee2e2;
   color:#991b1b;
 }
-.new-product{
+.product-form{
   display:none;
   background:#f7f7fb;
   border-radius:14px;
   padding:18px;
-  margin-bottom:15px;
+  margin-bottom:18px;
 }
-.new-product.active{
+.product-form.active{
   display:block;
 }
-.new-product label{
+.product-form h3{
+  margin-top:0;
+}
+.product-form label{
   display:grid;
   gap:6px;
-  margin:10px 0;
+  margin:12px 0;
   font-weight:600;
   font-size:14px;
 }
-.new-product input,
-.new-product textarea,
-.new-product select{
+.product-form input,
+.product-form textarea,
+.product-form select{
   width:100%;
   padding:11px;
   border:1px solid #d8dce5;
   border-radius:9px;
-  background:white;
+  background:#fff;
   font:inherit;
 }
-.new-product textarea{
+.product-form textarea{
   min-height:90px;
   resize:vertical;
 }
+.form-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+.secondary-btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  background:#e5e7eb;
+  color:#374151;
+}
 .help-text{
-  font-size:12px;
   color:#697386;
-  margin-top:4px;
+  font-size:12px;
+  font-weight:400;
 }
 .order-card{
   border:1px solid #e5e8ef;
@@ -270,6 +297,9 @@ body{
   .product-top{
     flex-direction:column;
   }
+  .product-actions{
+    justify-content:flex-start;
+  }
 }
 </style>
 </head>
@@ -349,16 +379,16 @@ body{
     </h2>
     <button
       class="business-btn"
-      onclick="showProductForm()"
+      onclick="newProduct()"
     >
       + Agregar producto
     </button>
   </div>
   <div
-    id="newProduct"
-    class="new-product"
+    id="productForm"
+    class="product-form"
   >
-    <h3>
+    <h3 id="formTitle">
       Nuevo producto
     </h3>
     <label>
@@ -376,7 +406,8 @@ body{
         placeholder="Ej. Lechuga, pollo, jitomate, aguacate y aderezo de la casa."
       ></textarea>
       <span class="help-text">
-        Puedes dejarla vacía para productos sencillos.
+        Para productos elaborados recomendamos
+        agregar ingredientes o una descripción.
       </span>
     </label>
     <label>
@@ -408,12 +439,20 @@ body{
         </option>
       </select>
     </label>
-    <button
-      class="business-btn"
-      onclick="addProduct()"
-    >
-      Guardar producto
-    </button>
+    <div class="form-buttons">
+      <button
+        class="business-btn"
+        onclick="saveProduct()"
+      >
+        Guardar producto
+      </button>
+      <button
+        class="secondary-btn"
+        onclick="cancelProductForm()"
+      >
+        Cancelar
+      </button>
+    </div>
   </div>
   <div id="products"></div>
 </section>
@@ -476,44 +515,54 @@ const money =
     "$" +
     Number(value || 0)
       .toFixed(2);
+let editingProductId =
+  null;
 /* =========================
    PRODUCTOS INICIALES
 ========================= */
 const defaultProducts = [
   {
     id:1,
-    name:"Ensalada especial",
+    name:
+      "Ensalada especial",
     description:
       "Lechuga, pollo, jitomate, aguacate y aderezo de la casa.",
     price:80,
-    category:"Ensaladas",
+    category:
+      "Ensaladas",
     active:true
   },
   {
     id:2,
-    name:"Sándwich de pollo",
+    name:
+      "Sándwich de pollo",
     description:
       "Pan, pollo, lechuga, jitomate y aderezo.",
     price:75,
-    category:"Sándwiches",
+    category:
+      "Sándwiches",
     active:true
   },
   {
     id:3,
-    name:"Jugo natural",
+    name:
+      "Jugo natural",
     description:
       "Jugo natural preparado al momento.",
     price:45,
-    category:"Jugos",
+    category:
+      "Jugos",
     active:true
   },
   {
     id:4,
-    name:"Licuado de fresa",
+    name:
+      "Licuado de fresa",
     description:
       "Licuado de fresa preparado al momento.",
     price:55,
-    category:"Licuados",
+    category:
+      "Licuados",
     active:true
   }
 ];
@@ -526,9 +575,11 @@ let products =
     ? JSON.parse(savedProducts)
     : defaultProducts;
 /*
- * Importante:
- * Si ya existen productos guardados,
- * se conservan.
+ * No reemplazamos los productos
+ * que ya existen en el navegador.
+ *
+ * Esto conserva Agua de limón
+ * y cualquier producto que ya hayas creado.
  */
 if(!savedProducts){
   localStorage.setItem(
@@ -537,7 +588,7 @@ if(!savedProducts){
   );
 }
 /* =========================
-   GUARDAR PRODUCTOS
+   GUARDAR
 ========================= */
 function saveProducts(){
   localStorage.setItem(
@@ -589,11 +640,11 @@ function renderProducts(){
                   `
               }
               <p>
-                ${product.category}
-                ·
                 <b>
                   ${money(product.price)}
                 </b>
+                ·
+                ${product.category}
               </p>
               <p>
                 ${
@@ -604,6 +655,12 @@ function renderProducts(){
               </p>
             </div>
             <div class="product-actions">
+              <button
+                class="small-btn edit-btn"
+                onclick="editProduct(${product.id})"
+              >
+                ✏️ Editar
+              </button>
               <button
                 class="small-btn toggle-btn"
                 onclick="toggleProduct(${product.id})"
@@ -634,48 +691,106 @@ function renderProducts(){
     ).length;
 }
 /* =========================
-   FORMULARIO PRODUCTO
+   NUEVO PRODUCTO
 ========================= */
-window.showProductForm =
+window.newProduct =
   () => {
-    document
-      .getElementById(
-        "newProduct"
-      )
-      .classList.toggle(
-        "active"
-      );
+    editingProductId =
+      null;
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "Nuevo producto";
+    document.getElementById(
+      "productName"
+    ).value = "";
+    document.getElementById(
+      "productDescription"
+    ).value = "";
+    document.getElementById(
+      "productPrice"
+    ).value = "";
+    document.getElementById(
+      "productCategory"
+    ).value =
+      "Ensaladas";
+    document.getElementById(
+      "productForm"
+    ).classList.add(
+      "active"
+    );
   };
-window.addProduct =
+/* =========================
+   EDITAR PRODUCTO
+========================= */
+window.editProduct =
+  id => {
+    const product =
+      products.find(
+        item =>
+          item.id === id
+      );
+    if(!product)
+      return;
+    editingProductId =
+      id;
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "Editar producto";
+    document.getElementById(
+      "productName"
+    ).value =
+      product.name || "";
+    document.getElementById(
+      "productDescription"
+    ).value =
+      product.description || "";
+    document.getElementById(
+      "productPrice"
+    ).value =
+      product.price || "";
+    document.getElementById(
+      "productCategory"
+    ).value =
+      product.category || "Otros";
+    document.getElementById(
+      "productForm"
+    ).classList.add(
+      "active"
+    );
+    window.scrollTo({
+      top:
+        document.getElementById(
+          "productForm"
+        ).offsetTop - 20,
+      behavior:
+        "smooth"
+    });
+  };
+/* =========================
+   GUARDAR PRODUCTO
+========================= */
+window.saveProduct =
   () => {
     const name =
-      document
-        .getElementById(
-          "productName"
-        )
-        .value
-        .trim();
+      document.getElementById(
+        "productName"
+      ).value.trim();
     const description =
-      document
-        .getElementById(
-          "productDescription"
-        )
-        .value
-        .trim();
+      document.getElementById(
+        "productDescription"
+      ).value.trim();
     const price =
       Number(
-        document
-          .getElementById(
-            "productPrice"
-          )
-          .value
+        document.getElementById(
+          "productPrice"
+        ).value
       );
     const category =
-      document
-        .getElementById(
-          "productCategory"
-        )
-        .value;
+      document.getElementById(
+        "productCategory"
+      ).value;
     if(!name){
       alert(
         "Escribe el nombre del producto."
@@ -688,44 +803,64 @@ window.addProduct =
       );
       return;
     }
-    products.push({
-      id:
-        Date.now(),
-      name:
-        name,
-      description:
-        description,
-      price:
-        price,
-      category:
-        category,
-      active:
-        true
-    });
+    /*
+     * EDITAR
+     */
+    if(
+      editingProductId !== null
+    ){
+      const product =
+        products.find(
+          item =>
+            item.id ===
+            editingProductId
+        );
+      if(product){
+        product.name =
+          name;
+        product.description =
+          description;
+        product.price =
+          price;
+        product.category =
+          category;
+      }
+    }
+    /*
+     * NUEVO
+     */
+    else{
+      products.push({
+        id:
+          Date.now(),
+        name:
+          name,
+        description:
+          description,
+        price:
+          price,
+        category:
+          category,
+        active:
+          true
+      });
+    }
     saveProducts();
     renderProducts();
-    document
-      .getElementById(
-        "productName"
-      )
-      .value = "";
-    document
-      .getElementById(
-        "productDescription"
-      )
-      .value = "";
-    document
-      .getElementById(
-        "productPrice"
-      )
-      .value = "";
-    document
-      .getElementById(
-        "newProduct"
-      )
-      .classList.remove(
-        "active"
-      );
+    cancelProductForm();
+  };
+/* =========================
+   CANCELAR
+========================= */
+window.cancelProductForm =
+  () => {
+    editingProductId =
+      null;
+    document.getElementById(
+      "productForm"
+    ).classList.remove(
+      "active"
+    );
   };
 /* =========================
    ACTIVAR / DESACTIVAR
@@ -945,7 +1080,7 @@ function renderOrders(){
     ).join("");
 }
 /* =========================
-   ACCIONES PEDIDO
+   ACEPTAR
 ========================= */
 window.acceptOrder =
   id => {
@@ -964,6 +1099,9 @@ window.acceptOrder =
     );
     renderAll();
   };
+/* =========================
+   RECHAZAR
+========================= */
 window.rejectOrder =
   id => {
     const order =
@@ -981,6 +1119,9 @@ window.rejectOrder =
     );
     renderAll();
   };
+/* =========================
+   LISTO
+========================= */
 window.readyOrder =
   id => {
     const order =
