@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>EntregaYa · Negocio</title>
+
+<link
+  rel="stylesheet"
+  href="styles.css"
+>
+
+<style>
+
+body{
+  background:#f5f7fb;
+}
+
+.business-header{
+  background:#fff;
+  border-bottom:1px solid #e7eaf0;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:800;
+  color:#5b35d5;
+}
+
+.business-name{
+  font-size:14px;
+  color:#697386;
+}
+
+.business-main{
+  max-width:1180px;
+  margin:auto;
+  padding:30px 5%;
+}
+
+.welcome{
+  background:linear-gradient(
+    135deg,
+    #5b35d5,
+    #8c68ed
+  );
+  color:white;
+  border-radius:22px;
+  padding:28px;
+  margin-bottom:24px;
+}
+
+.welcome h1{
+  margin:5px 0;
+  font-size:32px;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-bottom:25px;
+}
+
+.dashboard-card{
+  background:#fff;
+  border:1px solid #e6e9ef;
+  border-radius:16px;
+  padding:18px;
+}
+
+.dashboard-card span{
+  color:#697386;
+  font-size:14px;
+}
+
+.dashboard-card strong{
+  display:block;
+  font-size:26px;
+  margin-top:7px;
+}
+
+.section{
+  background:#fff;
+  border:1px solid #e6e9ef;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.section-header h2{
+  margin:0;
+}
+
+.business-btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  background:#5b35d5;
+  color:white;
+}
+
+.product-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:14px 0;
+  border-top:1px solid #eee;
+}
+
+.product-info h3{
+  margin:0 0 5px;
+}
+
+.product-info p{
+  margin:0;
+  color:#697386;
+  font-size:14px;
+}
+
+.product-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  border:0;
+  border-radius:8px;
+  padding:8px 10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.edit-btn{
+  background:#eee;
+}
+
+.toggle-btn{
+  background:#ede9fe;
+  color:#5b35d5;
+}
+
+.new-product{
+  display:none;
+  background:#f7f7fb;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:15px;
+}
+
+.new-product.active{
+  display:block;
+}
+
+.new-product label{
+  display:grid;
+  gap:6px;
+  margin:10px 0;
+  font-weight:600;
+  font-size:14px;
+}
+
+.new-product input{
+  width:100%;
+}
+
+.order-card{
+  border:1px solid #e5e8ef;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.order-status{
+  background:#ede9fe;
+  color:#5b35d5;
+  border-radius:20px;
+  padding:4px 9px;
+  font-size:12px;
+}
+
+.order-info{
+  margin:12px 0;
+  line-height:1.6;
+}
+
+.order-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.accept{
+  background:#5b35d5;
+  color:white;
+}
+
+.ready{
+  background:#16a34a;
+  color:white;
+}
+
+.reject{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.finance{
+  display:grid;
+  gap:8px;
+}
+
+.finance-row{
+  display:flex;
+  justify-content:space-between;
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+}
+
+.finance-total{
+  font-size:19px;
+  font-weight:800;
+  padding-top:12px;
+}
+
+.muted{
+  color:#697386;
+}
+
+@media(max-width:700px){
+
+  .business-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .business-main{
+    padding:22px 4%;
+  }
+
+  .welcome h1{
+    font-size:27px;
+  }
+
+  .product-row{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="business-header">
+
+  <div>
+
+    <div class="brand">
+      EntregaYa
+    </div>
+
+    <div class="business-name">
+      Portal del negocio
+    </div>
+
+  </div>
+
+  <div>
+    🟢 Negocio activo
+  </div>
+
+</header>
+
+
+<main class="business-main">
+
+
+<section class="welcome">
+
+  <p>
+    PANEL DEL NEGOCIO
+  </p>
+
+  <h1>
+    Cocina La Vallesana 👋
+  </h1>
+
+  <p>
+    Administra tus pedidos,
+    productos y ventas desde aquí.
+  </p>
+
+</section>
+
+
+<section class="dashboard">
+
+  <div class="dashboard-card">
+
+    <span>
+      Pedidos hoy
+    </span>
+
+    <strong id="todayOrders">
+      0
+    </strong>
+
+  </div>
+
+
+  <div class="dashboard-card">
+
+    <span>
+      Ventas de hoy
+    </span>
+
+    <strong id="todaySales">
+      $0.00
+    </strong>
+
+  </div>
+
+
+  <div class="dashboard-card">
+
+    <span>
+      Pendiente por recibir
+    </span>
+
+    <strong id="businessBalance">
+      $0.00
+    </strong>
+
+  </div>
+
+
+  <div class="dashboard-card">
+
+    <span>
+      Productos activos
+    </span>
+
+    <strong id="activeProducts">
+      0
+    </strong>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      🔔 Pedidos
+    </h2>
+
+  </div>
+
+  <div id="businessOrders">
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      🍔 Mis productos
+    </h2>
+
+    <button
+      class="business-btn"
+      onclick="showProductForm()"
+    >
+      + Agregar producto
+    </button>
+
+  </div>
+
+
+  <div
+    id="newProduct"
+    class="new-product"
+  >
+
+    <h3>
+      Nuevo producto
+    </h3>
+
+    <label>
+
+      Nombre
+
+      <input
+        id="productName"
+        type="text"
+        placeholder="Ej. Hamburguesa especial"
+      >
+
+    </label>
+
+
+    <label>
+
+      Precio
+
+      <input
+        id="productPrice"
+        type="number"
+        placeholder="120"
+      >
+
+    </label>
+
+
+    <label>
+
+      Categoría
+
+      <input
+        id="productCategory"
+        type="text"
+        placeholder="Comida"
+      >
+
+    </label>
+
+
+    <button
+      class="business-btn"
+      onclick="addProduct()"
+    >
+      Guardar producto
+    </button>
+
+  </div>
+
+
+  <div id="products">
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-header">
+
+    <h2>
+      💰 Finanzas
+    </h2>
+
+  </div>
+
+
+  <div class="finance">
+
+    <div class="finance-row">
+
+      <span>
+        Ventas
+      </span>
+
+      <b id="financeSales">
+        $0.00
+      </b>
+
+    </div>
+
+
+    <div class="finance-row">
+
+      <span>
+        Comisión EntregaYa
+      </span>
+
+      <b id="financeCommission">
+        $0.00
+      </b>
+
+    </div>
+
+
+    <div class="finance-row finance-total">
+
+      <span>
+        Saldo del negocio
+      </span>
+
+      <b id="financeBalance">
+        $0.00
+      </b>
+
+    </div>
+
+  </div>
+
+  <p class="muted">
+
+    La comisión se descuenta
+    automáticamente de tus ventas.
+
+  </p>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+const storageKey =
+  "entregaya-demo";
+
+
+let data =
+  JSON.parse(
+    localStorage.getItem(storageKey) ||
+    '{"cart":[],"orders":[]}'
+  );
+
+
+const money =
+  value =>
+    "$" +
+    Number(value || 0)
+      .toFixed(2);
+
+
+/* =========================
+   PRODUCTOS
+========================= */
+
+let products = [
+
+  {
+    id:1,
+    name:"Hamburguesa",
+    price:120,
+    category:"Comida",
+    active:true
+  },
+
+  {
+    id:2,
+    name:"Alitas",
+    price:150,
+    category:"Comida",
+    active:true
+  },
+
+  {
+    id:3,
+    name:"Torta de pollo",
+    price:90,
+    category:"Comida",
+    active:true
+  }
+
+];
+
+
+const productsKey =
+  "entregaya-business-products";
+
+
+const savedProducts =
+  localStorage.getItem(
+    productsKey
+  );
+
+
+if(savedProducts){
+
+  products =
+    JSON.parse(
+      savedProducts
+    );
+
+}
+
+
+function saveProducts(){
+
+  localStorage.setItem(
+    productsKey,
+    JSON.stringify(products)
+  );
+
+}
+
+
+/* =========================
+   PRODUCTOS
+========================= */
+
+function renderProducts(){
+
+  const container =
+    document.getElementById(
+      "products"
+    );
+
+
+  container.innerHTML =
+    products.map(product => `
+
+      <div class="product-row">
+
+        <div class="product-info">
+
+          <h3>
+            ${product.name}
+          </h3>
+
+          <p>
+            ${product.category}
+            ·
+            ${money(product.price)}
+          </p>
+
+          <p>
+
+            ${
+              product.active
+                ? "🟢 Disponible"
+                : "🔴 No disponible"
+            }
+
+          </p>
+
+        </div>
+
+
+        <div class="product-actions">
+
+          <button
+            class="small-btn toggle-btn"
+            onclick="toggleProduct(${product.id})"
+          >
+
+            ${
+              product.active
+                ? "Desactivar"
+                : "Activar"
+            }
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+
+  document.getElementById(
+    "activeProducts"
+  ).textContent =
+    products.filter(
+      product =>
+        product.active
+    ).length;
+
+}
+
+
+window.showProductForm =
+  () => {
+
+    document
+      .getElementById(
+        "newProduct"
+      )
+      .classList.toggle(
+        "active"
+      );
+
+  };
+
+
+window.addProduct =
+  () => {
+
+    const name =
+      document
+        .getElementById(
+          "productName"
+        )
+        .value
+        .trim();
+
+
+    const price =
+      Number(
+        document
+          .getElementById(
+            "productPrice"
+          )
+          .value
+      );
+
+
+    const category =
+      document
+        .getElementById(
+          "productCategory"
+        )
+        .value
+        .trim();
+
+
+    if(!name){
+
+      alert(
+        "Escribe el nombre del producto."
+      );
+
+      return;
+
+    }
+
+
+    if(!price){
+
+      alert(
+        "Escribe el precio."
+      );
+
+      return;
+
+    }
+
+
+    products.push({
+
+      id:
+        Date.now(),
+
+      name,
+
+      price,
+
+      category:
+        category ||
+        "General",
+
+      active:true
+
+    });
+
+
+    saveProducts();
+
+    renderProducts();
+
+
+    document
+      .getElementById(
+        "productName"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "productPrice"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "productCategory"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "newProduct"
+      )
+      .classList.remove(
+        "active"
+      );
+
+  };
+
+
+window.toggleProduct =
+  id => {
+
+    const product =
+      products.find(
+        item =>
+          item.id === id
+      );
+
+
+    if(!product)
+      return;
+
+
+    product.active =
+      !product.active;
+
+
+    saveProducts();
+
+    renderProducts();
+
+  };
+
+
+/* =========================
+   PEDIDOS
+========================= */
+
+function renderOrders(){
+
+  const container =
+    document.getElementById(
+      "businessOrders"
+    );
+
+
+  const orders =
+    data.orders || [];
+
+
+  if(!orders.length){
+
+    container.innerHTML = `
+
+      <p class="muted">
+        Todavía no hay pedidos.
+      </p>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    orders.map(
+      order => {
+
+        const customer =
+          order.customer ||
+          {};
+
+
+        let actions = "";
+
+
+        if(
+          order.status ===
+          "Nuevo"
+        ){
+
+          actions = `
+
+            <div class="order-actions">
+
+              <button
+                class="small-btn accept"
+                onclick="acceptOrder('${order.id}')"
+              >
+                ✓ Aceptar
+              </button>
+
+              <button
+                class="small-btn reject"
+                onclick="rejectOrder('${order.id}')"
+              >
+                ✕ Rechazar
+              </button>
+
+            </div>
+
+          `;
+
+        }
+
+
+        if(
+          order.status ===
+          "Aceptado"
+        ){
+
+          actions = `
+
+            <div class="order-actions">
+
+              <button
+                class="small-btn ready"
+                onclick="readyOrder('${order.id}')"
+              >
+                📦 Pedido listo
+              </button>
+
+            </div>
+
+          `;
+
+        }
+
+
+        return `
+
+          <div class="order-card">
+
+            <div class="order-top">
+
+              <b>
+                ${order.id}
+              </b>
+
+              <span
+                class="order-status"
+              >
+                ${order.status}
+              </span>
+
+            </div>
+
+
+            <div class="order-info">
+
+              <b>
+                Cliente:
+              </b>
+
+              ${
+                customer.name ||
+                "Cliente"
+              }
+
+              <br>
+
+              <b>
+                Dirección:
+              </b>
+
+              ${
+                customer.address ||
+                "No registrada"
+              }
+
+              <br>
+
+              <b>
+                Productos:
+              </b>
+
+              ${
+                (order.items || [])
+                  .map(
+                    item =>
+                      item.name
+                  )
+                  .join(", ")
+              }
+
+              <br>
+
+              <b>
+                Total:
+              </b>
+
+              ${money(order.total)}
+
+            </div>
+
+
+            ${actions}
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+window.acceptOrder =
+  id => {
+
+    const order =
+      data.orders.find(
+        item =>
+          item.id === id
+      );
+
+
+    if(!order)
+      return;
+
+
+    order.status =
+      "Aceptado";
+
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(data)
+    );
+
+
+    renderAll();
+
+  };
+
+
+window.rejectOrder =
+  id => {
+
+    const order =
+      data.orders.find(
+        item =>
+          item.id === id
+      );
+
+
+    if(!order)
+      return;
+
+
+    order.status =
+      "Rechazado";
+
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(data)
+    );
+
+
+    renderAll();
+
+  };
+
+
+window.readyOrder =
+  id => {
+
+    const order =
+      data.orders.find(
+        item =>
+          item.id === id
+      );
+
+
+    if(!order)
+      return;
+
+
+    order.status =
+      "Listo";
+
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(data)
+    );
+
+
+    renderAll();
+
+  };
+
+
+/* =========================
+   FINANZAS
+========================= */
+
+function renderFinance(){
+
+  const orders =
+    data.orders || [];
+
+
+  const validOrders =
+    orders.filter(
+      order =>
+        order.status !==
+        "Rechazado"
+    );
+
+
+  const sales =
+    validOrders.reduce(
+      (
+        total,
+        order
+      ) =>
+        total +
+        Number(
+          order.subtotal || 0
+        ),
+      0
+    );
+
+
+  const commission =
+    validOrders.reduce(
+      (
+        total,
+        order
+      ) =>
+        total +
+        Number(
+          order.commission || 0
+        ),
+      0
+    );
+
+
+  const balance =
+    sales -
+    commission;
+
+
+  document.getElementById(
+    "financeSales"
+  ).textContent =
+    money(sales);
+
+
+  document.getElementById(
+    "financeCommission"
+  ).textContent =
+    money(commission);
+
+
+  document.getElementById(
+    "financeBalance"
+  ).textContent =
+    money(balance);
+
+
+  document.getElementById(
+    "todayOrders"
+  ).textContent =
+    validOrders.length;
+
+
+  document.getElementById(
+    "todaySales"
+  ).textContent =
+    money(sales);
+
+
+  document.getElementById(
+    "businessBalance"
+  ).textContent =
+    money(balance);
+
+}
+
+
+/* =========================
+   ACTUALIZAR
+========================= */
+
+function renderAll(){
+
+  const saved =
+    localStorage.getItem(
+      storageKey
+    );
+
+
+  if(saved){
+
+    data =
+      JSON.parse(saved);
+
+  }
+
+
+  renderOrders();
+
+  renderProducts();
+
+  renderFinance();
+
+}
+
+
+renderAll();
+
+</script>
+
+</body>
+
+</html>
