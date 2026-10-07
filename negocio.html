@@ -2,9 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 <title>EntregaYa · JMA Hermanos</title>
-<link rel="stylesheet" href="styles.css">
+<link
+  rel="stylesheet"
+  href="styles.css"
+>
 <style>
 body{
   background:#f5f7fb;
@@ -33,7 +39,11 @@ body{
   padding:30px 5%;
 }
 .welcome{
-  background:linear-gradient(135deg,#5b35d5,#8c68ed);
+  background:linear-gradient(
+    135deg,
+    #5b35d5,
+    #8c68ed
+  );
   color:white;
   border-radius:22px;
   padding:28px;
@@ -45,7 +55,8 @@ body{
 }
 .dashboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
   gap:14px;
   margin-bottom:25px;
 }
@@ -91,20 +102,26 @@ body{
   color:white;
 }
 .product-row{
+  padding:16px 0;
+  border-top:1px solid #eee;
+}
+.product-top{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   gap:15px;
-  padding:14px 0;
-  border-top:1px solid #eee;
 }
 .product-info h3{
   margin:0 0 5px;
 }
 .product-info p{
-  margin:0;
+  margin:5px 0;
   color:#697386;
   font-size:14px;
+}
+.product-description{
+  color:#4b5563 !important;
+  line-height:1.5;
 }
 .product-actions{
   display:flex;
@@ -144,6 +161,7 @@ body{
   font-size:14px;
 }
 .new-product input,
+.new-product textarea,
 .new-product select{
   width:100%;
   padding:11px;
@@ -151,6 +169,15 @@ body{
   border-radius:9px;
   background:white;
   font:inherit;
+}
+.new-product textarea{
+  min-height:90px;
+  resize:vertical;
+}
+.help-text{
+  font-size:12px;
+  color:#697386;
+  margin-top:4px;
 }
 .order-card{
   border:1px solid #e5e8ef;
@@ -174,6 +201,20 @@ body{
 .order-info{
   margin:12px 0;
   line-height:1.6;
+}
+.order-item{
+  background:#f7f7fb;
+  border-radius:10px;
+  padding:10px;
+  margin:8px 0;
+}
+.special-request{
+  margin-top:7px;
+  padding:8px 10px;
+  background:#fff7ed;
+  border-left:3px solid #f59e0b;
+  border-radius:6px;
+  color:#92400e;
 }
 .order-actions{
   display:flex;
@@ -226,8 +267,7 @@ body{
   .welcome h1{
     font-size:27px;
   }
-  .product-row{
-    align-items:flex-start;
+  .product-top{
     flex-direction:column;
   }
 }
@@ -262,20 +302,36 @@ body{
 </section>
 <section class="dashboard">
   <div class="dashboard-card">
-    <span>Pedidos</span>
-    <strong id="todayOrders">0</strong>
+    <span>
+      Pedidos
+    </span>
+    <strong id="todayOrders">
+      0
+    </strong>
   </div>
   <div class="dashboard-card">
-    <span>Ventas</span>
-    <strong id="todaySales">$0.00</strong>
+    <span>
+      Ventas
+    </span>
+    <strong id="todaySales">
+      $0.00
+    </strong>
   </div>
   <div class="dashboard-card">
-    <span>Saldo del negocio</span>
-    <strong id="businessBalance">$0.00</strong>
+    <span>
+      Saldo del negocio
+    </span>
+    <strong id="businessBalance">
+      $0.00
+    </strong>
   </div>
   <div class="dashboard-card">
-    <span>Productos activos</span>
-    <strong id="activeProducts">0</strong>
+    <span>
+      Productos activos
+    </span>
+    <strong id="activeProducts">
+      0
+    </strong>
   </div>
 </section>
 <section class="section">
@@ -310,8 +366,18 @@ body{
       <input
         id="productName"
         type="text"
-        placeholder="Ej. Ensalada especial"
+        placeholder="Ej. Ensalada César"
       >
+    </label>
+    <label>
+      Descripción
+      <textarea
+        id="productDescription"
+        placeholder="Ej. Lechuga, pollo, jitomate, aguacate y aderezo de la casa."
+      ></textarea>
+      <span class="help-text">
+        Puedes dejarla vacía para productos sencillos.
+      </span>
     </label>
     <label>
       Precio
@@ -325,11 +391,21 @@ body{
     <label>
       Categoría
       <select id="productCategory">
-        <option>Ensaladas</option>
-        <option>Sándwiches</option>
-        <option>Jugos</option>
-        <option>Licuados</option>
-        <option>Otros</option>
+        <option>
+          Ensaladas
+        </option>
+        <option>
+          Sándwiches
+        </option>
+        <option>
+          Jugos
+        </option>
+        <option>
+          Licuados
+        </option>
+        <option>
+          Otros
+        </option>
       </select>
     </label>
     <button
@@ -381,6 +457,9 @@ body{
 </section>
 </main>
 <script>
+/* =========================
+   CONFIGURACIÓN
+========================= */
 const BUSINESS_NAME =
   "JMA Hermanos";
 const storageKey =
@@ -397,11 +476,15 @@ const money =
     "$" +
     Number(value || 0)
       .toFixed(2);
-/* PRODUCTOS INICIALES */
+/* =========================
+   PRODUCTOS INICIALES
+========================= */
 const defaultProducts = [
   {
     id:1,
     name:"Ensalada especial",
+    description:
+      "Lechuga, pollo, jitomate, aguacate y aderezo de la casa.",
     price:80,
     category:"Ensaladas",
     active:true
@@ -409,6 +492,8 @@ const defaultProducts = [
   {
     id:2,
     name:"Sándwich de pollo",
+    description:
+      "Pan, pollo, lechuga, jitomate y aderezo.",
     price:75,
     category:"Sándwiches",
     active:true
@@ -416,6 +501,8 @@ const defaultProducts = [
   {
     id:3,
     name:"Jugo natural",
+    description:
+      "Jugo natural preparado al momento.",
     price:45,
     category:"Jugos",
     active:true
@@ -423,33 +510,49 @@ const defaultProducts = [
   {
     id:4,
     name:"Licuado de fresa",
+    description:
+      "Licuado de fresa preparado al momento.",
     price:55,
     category:"Licuados",
     active:true
   }
 ];
 let savedProducts =
-  localStorage.getItem(productsKey);
+  localStorage.getItem(
+    productsKey
+  );
 let products =
   savedProducts
     ? JSON.parse(savedProducts)
     : defaultProducts;
+/*
+ * Importante:
+ * Si ya existen productos guardados,
+ * se conservan.
+ */
 if(!savedProducts){
   localStorage.setItem(
     productsKey,
     JSON.stringify(products)
   );
 }
-/* PRODUCTOS */
+/* =========================
+   GUARDAR PRODUCTOS
+========================= */
 function saveProducts(){
   localStorage.setItem(
     productsKey,
     JSON.stringify(products)
   );
 }
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
 function renderProducts(){
   const container =
-    document.getElementById("products");
+    document.getElementById(
+      "products"
+    );
   if(!products.length){
     container.innerHTML = `
       <div class="empty">
@@ -467,42 +570,57 @@ function renderProducts(){
     products.map(
       product => `
         <div class="product-row">
-          <div class="product-info">
-            <h3>
-              ${product.name}
-            </h3>
-            <p>
-              ${product.category}
-              ·
-              <b>
-                ${money(product.price)}
-              </b>
-            </p>
-            <p>
+          <div class="product-top">
+            <div class="product-info">
+              <h3>
+                ${product.name}
+              </h3>
               ${
-                product.active
-                  ? "🟢 Disponible"
-                  : "🔴 No disponible"
+                product.description
+                  ? `
+                    <p class="product-description">
+                      ${product.description}
+                    </p>
+                  `
+                  : `
+                    <p class="muted">
+                      Sin descripción
+                    </p>
+                  `
               }
-            </p>
-          </div>
-          <div class="product-actions">
-            <button
-              class="small-btn toggle-btn"
-              onclick="toggleProduct(${product.id})"
-            >
-              ${
-                product.active
-                  ? "Desactivar"
-                  : "Activar"
-              }
-            </button>
-            <button
-              class="small-btn delete-btn"
-              onclick="deleteProduct(${product.id})"
-            >
-              Eliminar
-            </button>
+              <p>
+                ${product.category}
+                ·
+                <b>
+                  ${money(product.price)}
+                </b>
+              </p>
+              <p>
+                ${
+                  product.active
+                    ? "🟢 Disponible"
+                    : "🔴 No disponible"
+                }
+              </p>
+            </div>
+            <div class="product-actions">
+              <button
+                class="small-btn toggle-btn"
+                onclick="toggleProduct(${product.id})"
+              >
+                ${
+                  product.active
+                    ? "Desactivar"
+                    : "Activar"
+                }
+              </button>
+              <button
+                class="small-btn delete-btn"
+                onclick="deleteProduct(${product.id})"
+              >
+                Eliminar
+              </button>
+            </div>
           </div>
         </div>
       `
@@ -515,28 +633,48 @@ function renderProducts(){
         product.active
     ).length;
 }
+/* =========================
+   FORMULARIO PRODUCTO
+========================= */
 window.showProductForm =
   () => {
     document
-      .getElementById("newProduct")
-      .classList.toggle("active");
+      .getElementById(
+        "newProduct"
+      )
+      .classList.toggle(
+        "active"
+      );
   };
 window.addProduct =
   () => {
     const name =
       document
-        .getElementById("productName")
+        .getElementById(
+          "productName"
+        )
+        .value
+        .trim();
+    const description =
+      document
+        .getElementById(
+          "productDescription"
+        )
         .value
         .trim();
     const price =
       Number(
         document
-          .getElementById("productPrice")
+          .getElementById(
+            "productPrice"
+          )
           .value
       );
     const category =
       document
-        .getElementById("productCategory")
+        .getElementById(
+          "productCategory"
+        )
         .value;
     if(!name){
       alert(
@@ -551,24 +689,47 @@ window.addProduct =
       return;
     }
     products.push({
-      id:Date.now(),
-      name:name,
-      price:price,
-      category:category,
-      active:true
+      id:
+        Date.now(),
+      name:
+        name,
+      description:
+        description,
+      price:
+        price,
+      category:
+        category,
+      active:
+        true
     });
     saveProducts();
     renderProducts();
-    document.getElementById(
-      "productName"
-    ).value = "";
-    document.getElementById(
-      "productPrice"
-    ).value = "";
-    document.getElementById(
-      "newProduct"
-    ).classList.remove("active");
+    document
+      .getElementById(
+        "productName"
+      )
+      .value = "";
+    document
+      .getElementById(
+        "productDescription"
+      )
+      .value = "";
+    document
+      .getElementById(
+        "productPrice"
+      )
+      .value = "";
+    document
+      .getElementById(
+        "newProduct"
+      )
+      .classList.remove(
+        "active"
+      );
   };
+/* =========================
+   ACTIVAR / DESACTIVAR
+========================= */
 window.toggleProduct =
   id => {
     const product =
@@ -583,6 +744,9 @@ window.toggleProduct =
     saveProducts();
     renderProducts();
   };
+/* =========================
+   ELIMINAR
+========================= */
 window.deleteProduct =
   id => {
     const product =
@@ -607,7 +771,9 @@ window.deleteProduct =
     saveProducts();
     renderProducts();
   };
-/* PEDIDOS */
+/* =========================
+   PEDIDOS
+========================= */
 function renderOrders(){
   const container =
     document.getElementById(
@@ -633,10 +799,12 @@ function renderOrders(){
     orders.map(
       order => {
         const customer =
-          order.customer || {};
+          order.customer ||
+          {};
         let actions = "";
         if(
-          order.status === "Nuevo"
+          order.status ===
+          "Nuevo"
         ){
           actions = `
             <div class="order-actions">
@@ -656,7 +824,8 @@ function renderOrders(){
           `;
         }
         if(
-          order.status === "Aceptado"
+          order.status ===
+          "Aceptado"
         ){
           actions = `
             <div class="order-actions">
@@ -675,44 +844,99 @@ function renderOrders(){
               <b>
                 ${order.id}
               </b>
-              <span class="order-status">
+              <span
+                class="order-status"
+              >
                 ${order.status}
               </span>
             </div>
             <div class="order-info">
-              <b>Cliente:</b>
-              ${customer.name || "Cliente"}
+              <b>
+                Cliente:
+              </b>
+              ${
+                customer.name ||
+                "Cliente"
+              }
               <br>
-              <b>Teléfono:</b>
-              ${customer.phone || "No registrado"}
+              <b>
+                Teléfono:
+              </b>
+              ${
+                customer.phone ||
+                "No registrado"
+              }
               <br>
-              <b>Dirección:</b>
-              ${customer.address || "No registrada"}
+              <b>
+                Dirección:
+              </b>
+              ${
+                customer.address ||
+                "No registrada"
+              }
               <br>
               ${
                 customer.reference
                   ? `
-                    <b>Referencia:</b>
+                    <b>
+                      Referencia:
+                    </b>
                     ${customer.reference}
                     <br>
                   `
                   : ""
               }
-              <b>Productos:</b>
+              <b>
+                Productos:
+              </b>
               ${
                 (order.items || [])
                   .map(
-                    item =>
-                      item.name
+                    item => `
+                      <div class="order-item">
+                        <b>
+                          ${item.name}
+                        </b>
+                        ${
+                          item.quantity
+                            ? `
+                              · Cantidad:
+                              ${item.quantity}
+                            `
+                            : ""
+                        }
+                        ${
+                          item.specialRequest
+                            ? `
+                              <div
+                                class="special-request"
+                              >
+                                📝
+                                <b>
+                                  Petición especial:
+                                </b>
+                                ${item.specialRequest}
+                              </div>
+                            `
+                            : ""
+                        }
+                      </div>
+                    `
                   )
-                  .join(", ")
+                  .join("")
               }
-              <br>
-              <b>Venta:</b>
+              <b>
+                Venta:
+              </b>
               ${money(order.subtotal)}
               <br>
-              <b>Forma de pago:</b>
-              ${order.payment || "Efectivo"}
+              <b>
+                Forma de pago:
+              </b>
+              ${
+                order.payment ||
+                "Efectivo"
+              }
             </div>
             ${actions}
           </div>
@@ -720,7 +944,9 @@ function renderOrders(){
       }
     ).join("");
 }
-/* ACCIONES */
+/* =========================
+   ACCIONES PEDIDO
+========================= */
 window.acceptOrder =
   id => {
     const order =
@@ -772,7 +998,9 @@ window.readyOrder =
     );
     renderAll();
   };
-/* FINANZAS */
+/* =========================
+   FINANZAS
+========================= */
 function renderFinance(){
   const orders =
     (data.orders || [])
@@ -839,7 +1067,9 @@ function renderFinance(){
   ).textContent =
     money(balance);
 }
-/* INICIO */
+/* =========================
+   INICIO
+========================= */
 function renderAll(){
   const saved =
     localStorage.getItem(
