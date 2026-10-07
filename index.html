@@ -1,1191 +1,813 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-<title>EntregaYa · Tres Valles</title>
-<style>
-*{
-  box-sizing:border-box;
-}
-body{
-  margin:0;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-  background:#f5f7fb;
-  color:#172033;
-}
-/* HEADER */
-header{
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  padding:15px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-.logo{
-  color:#5b35d5;
-  font-size:24px;
-  font-weight:800;
-}
-.location{
-  color:#6b7280;
-  font-size:13px;
-}
-nav{
-  display:flex;
-  gap:6px;
-  overflow-x:auto;
-}
-.tab{
-  border:0;
-  background:#f0f1f6;
-  padding:9px 12px;
-  border-radius:9px;
-  white-space:nowrap;
-  cursor:pointer;
-  font-weight:600;
-}
-.tab.active{
-  background:#5b35d5;
-  color:#fff;
-}
-/* PANELES */
-.panel{
-  display:none;
-  max-width:1150px;
-  margin:auto;
-  padding:28px 5%;
-}
-.panel.active{
-  display:block;
-}
-/* HERO */
-.hero{
-  background:
-    linear-gradient(
-      135deg,
-      #5b35d5,
-      #8c68ed
-    );
-  color:#fff;
-  border-radius:22px;
-  padding:30px;
-  margin-bottom:24px;
-}
-.hero small{
-  letter-spacing:1.5px;
-  opacity:.8;
-}
-.hero h1{
-  font-size:34px;
-  margin:8px 0;
-}
-.hero p{
-  margin:0;
-  opacity:.9;
-}
-/* NEGOCIOS */
-.business-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(260px,1fr)
-    );
-  gap:16px;
-}
-.business-card{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:20px;
-  cursor:pointer;
-  transition:.15s;
-}
-.business-card:hover{
-  transform:translateY(-2px);
-  box-shadow:
-    0 8px 25px
-    rgba(0,0,0,.07);
-}
-.business-icon{
-  font-size:34px;
-  margin-bottom:8px;
-}
-.business-card h3{
-  margin:5px 0;
-}
-.business-card p{
-  color:#6b7280;
-  font-size:14px;
-}
-/* NEGOCIO SELECCIONADO */
-.store{
-  display:none;
-}
-.store.active{
-  display:block;
-}
-.back{
-  border:0;
-  background:#fff;
-  padding:9px 13px;
-  border-radius:9px;
-  cursor:pointer;
-  margin-bottom:15px;
-  font-weight:700;
-}
-/* PRODUCTOS */
-.product-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(250px,1fr)
-    );
-  gap:15px;
-}
-.product-card{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
-  padding:17px;
-}
-.product-card h3{
-  margin:0 0 7px;
-}
-.description{
-  color:#6b7280;
-  font-size:14px;
-  line-height:1.5;
-  min-height:42px;
-}
-.price{
-  font-size:20px;
-  font-weight:800;
-  margin:10px 0;
-}
-.quantity{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin:10px 0;
-}
-.quantity button{
-  border:0;
-  background:#eee;
-  width:34px;
-  height:34px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:18px;
-}
-.quantity span{
-  min-width:25px;
-  text-align:center;
-  font-weight:700;
-}
-.special-input{
-  width:100%;
-  padding:9px;
-  border:1px solid #d1d5db;
-  border-radius:8px;
-  font:inherit;
-  margin-bottom:9px;
-}
-.add{
-  width:100%;
-  border:0;
-  background:#5b35d5;
-  color:white;
-  padding:10px;
-  border-radius:9px;
-  font-weight:700;
-  cursor:pointer;
-}
-/* CARRITO */
-.cart{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:20px;
-  margin-top:24px;
-}
-.cart h2{
-  margin-top:0;
-}
-.cart-item{
-  border-top:1px solid #eee;
-  padding:12px 0;
-}
-.cart-item:first-child{
-  border-top:0;
-}
-.cart-item-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-.cart-special{
-  background:#fff7ed;
-  color:#92400e;
-  padding:7px;
-  border-radius:6px;
-  margin-top:6px;
-  font-size:13px;
-}
-.remove{
-  border:0;
-  background:#fee2e2;
-  color:#991b1b;
-  border-radius:7px;
-  padding:5px 8px;
-  cursor:pointer;
-}
-.totals{
-  display:grid;
-  grid-template-columns:
-    1fr auto;
-  gap:8px;
-  border-top:1px solid #eee;
-  padding-top:15px;
-  margin-top:12px;
-}
-.total{
-  font-size:19px;
-  font-weight:800;
-}
-/* DATOS CLIENTE */
-.customer{
-  margin-top:22px;
-  border-top:1px solid #eee;
-  padding-top:18px;
-}
-.customer label{
-  display:block;
-  font-weight:600;
-  font-size:14px;
-  margin:10px 0;
-}
-.customer input,
-.customer textarea,
-.customer select{
-  width:100%;
-  margin-top:5px;
-  padding:10px;
-  border:1px solid #d1d5db;
-  border-radius:9px;
-  font:inherit;
-}
-.customer textarea{
-  min-height:70px;
-  resize:vertical;
-}
-.confirm{
-  width:100%;
-  margin-top:12px;
-  padding:13px;
-  border:0;
-  border-radius:10px;
-  background:#5b35d5;
-  color:white;
-  font-weight:800;
-  cursor:pointer;
-}
-/* OTROS PANELES */
-.cards{
-  display:grid;
-  gap:12px;
-}
-.card{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:16px;
-}
-.status{
-  display:inline-block;
-  background:#ede9fe;
-  color:#5b35d5;
-  border-radius:20px;
-  padding:4px 9px;
-  font-size:12px;
-}
-.muted{
-  color:#6b7280;
-  font-size:14px;
-}
-/* MÓVIL */
-@media(max-width:700px){
-  header{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-  .panel{
-    padding:22px 4%;
-  }
-  .hero h1{
-    font-size:28px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EntregaYa - Tres Valles</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      color: #d1d5db;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      background: white;
+      overflow-x: auto;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav button {
+      border: none;
+      background: #e5e7eb;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    nav button.active {
+      background: #111827;
+      color: white;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .hero {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .hero h2 {
+      margin-top: 0;
+    }
+
+    .business-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .business-card h3 {
+      margin-top: 0;
+    }
+
+    .business-card button,
+    .product button,
+    .cart button,
+    .confirm-button {
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    }
+
+    .product h4 {
+      margin: 0 0 5px;
+    }
+
+    .product p {
+      color: #666;
+      margin: 5px 0;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .quantity button {
+      width: 35px;
+      height: 35px;
+      padding: 0;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 11px;
+      margin: 6px 0 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .cart {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back {
+      background: #6b7280 !important;
+      margin-bottom: 15px;
+    }
+
+    .success {
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .empty {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
+
 <header>
-  <div>
-    <div class="logo">
-      EntregaYa
-    </div>
-    <div class="location">
-      📍 Tres Valles
-    </div>
-  </div>
-  <nav>
-    <button
-      class="tab active"
-      data-tab="cliente"
-    >
-      🛍️ Comprar
-    </button>
-    <button
-      class="tab"
-      data-tab="negocio"
-    >
-      🏪 Negocio
-    </button>
-    <button
-      class="tab"
-      data-tab="repartidor"
-    >
-      🛵 Repartidor
-    </button>
-    <button
-      class="tab"
-      data-tab="admin"
-    >
-      📊 Administración
-    </button>
-  </nav>
+  <h1>EntregaYa</h1>
+  <p>Tu delivery local en Tres Valles</p>
 </header>
-<!-- =====================================
-     CLIENTE
-====================================== -->
-<section
-  id="cliente"
-  class="panel active"
->
-  <div class="hero">
-    <small>
-      DELIVERY GENERAL
-    </small>
-    <h1>
-      Lo que necesites,
-      hasta tu puerta.
-    </h1>
-    <p>
-      Compra en negocios locales
-      de Tres Valles.
-    </p>
-  </div>
-  <!-- LISTA DE NEGOCIOS -->
-  <div id="businessList">
-    <div class="business-grid">
-      <div
-        class="business-card"
-        onclick="openStore('JMA Hermanos')"
-      >
-        <div class="business-icon">
-          🥗
-        </div>
-        <h3>
-          JMA Hermanos
-        </h3>
-        <p>
-          Ensaladas, sándwiches,
-          jugos y licuados.
-        </p>
-        <span class="status">
-          Comida
-        </span>
-      </div>
-      <div class="business-card">
-        <div class="business-icon">
-          🛒
-        </div>
-        <h3>
-          Próximamente
-        </h3>
-        <p>
-          Más negocios locales
-          estarán disponibles.
-        </p>
-      </div>
-    </div>
-  </div>
-  <!-- TIENDA -->
-  <div
-    id="store"
-    class="store"
-  >
-    <button
-      class="back"
-      onclick="closeStore()"
-    >
-      ← Volver a negocios
-    </button>
+
+<nav>
+  <button class="active" onclick="mostrarInicio()">Comprar</button>
+  <button onclick="mostrarMensaje('Negocio')">Negocio</button>
+  <button onclick="mostrarMensaje('Repartidor')">Repartidor</button>
+  <button onclick="mostrarMensaje('Administración')">Administración</button>
+</nav>
+
+<main>
+
+  <!-- INICIO -->
+  <section id="inicio">
+
     <div class="hero">
-      <small>
-        NEGOCIO
-      </small>
-      <h1>
-        JMA Hermanos
-      </h1>
+      <h2>¿Qué quieres pedir hoy?</h2>
+      <p>Compra en negocios locales y recibe tu pedido en Tres Valles.</p>
+    </div>
+
+    <h2>Negocios disponibles</h2>
+
+    <div class="business-card">
+      <h3>JMA Hermanos</h3>
+      <p>Comida, bebidas y productos preparados.</p>
+      <button onclick="abrirJMA()">Ver productos</button>
+    </div>
+
+    <div class="business-card">
+      <h3>Próximamente</h3>
+      <p>Más negocios locales se estarán incorporando a EntregaYa.</p>
+    </div>
+
+  </section>
+
+
+  <!-- JMA -->
+  <section id="jma" class="hidden">
+
+    <button class="back" onclick="mostrarInicio()">← Volver a negocios</button>
+
+    <div class="hero">
+      <h2>JMA Hermanos</h2>
+      <p>Selecciona tus productos.</p>
+    </div>
+
+    <div id="productosJMA"></div>
+
+    <div id="carrito" class="cart hidden">
+
+      <h2>Tu pedido</h2>
+
+      <div id="carritoItems"></div>
+
+      <div class="total">
+        Subtotal: $<span id="subtotal">0.00</span>
+      </div>
+
+      <div class="total">
+        Envío: $30.00
+      </div>
+
+      <div class="total">
+        Total: $<span id="total">30.00</span>
+      </div>
+
+      <h3>Datos de entrega</h3>
+
+      <label>Nombre</label>
+      <input id="nombre" type="text" placeholder="Tu nombre">
+
+      <label>Teléfono</label>
+      <input id="telefono" type="tel" placeholder="Tu teléfono">
+
+      <label>Dirección</label>
+      <input id="direccion" type="text" placeholder="Calle, número, colonia">
+
+      <label>Referencia</label>
+      <textarea id="referencia" placeholder="Ej. Casa color azul, frente a..."></textarea>
+
+      <label>Forma de pago</label>
+      <select id="pago">
+        <option value="Efectivo">Efectivo</option>
+        <option value="Transferencia">Transferencia</option>
+      </select>
+
+      <button class="confirm-button" onclick="confirmarPedido()">
+        Confirmar pedido
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- MENSAJE -->
+  <section id="mensaje" class="hidden">
+
+    <div class="hero">
+      <h2 id="tituloMensaje"></h2>
+      <p>Esta sección la construiremos en el siguiente paso.</p>
+    </div>
+
+    <button onclick="mostrarInicio()">← Volver</button>
+
+  </section>
+
+
+  <!-- ÉXITO -->
+  <section id="exito" class="hidden">
+
+    <div class="success">
+      <h2>🎉 ¡Pedido recibido!</h2>
+
       <p>
-        Ensaladas, sándwiches,
-        jugos y licuados.
+        Tu pedido fue enviado correctamente a JMA Hermanos.
       </p>
+
+      <p>
+        Número de pedido:
+        <strong id="numeroPedido"></strong>
+      </p>
+
+      <p>
+        El negocio deberá aceptar y preparar tu pedido.
+      </p>
+
+      <button onclick="mostrarInicio()">Volver a comprar</button>
     </div>
-    <div
-      id="productGrid"
-      class="product-grid"
-    ></div>
-    <!-- CARRITO -->
-    <div class="cart">
-      <h2>
-        🛒 Tu pedido
-      </h2>
-      <div id="cartItems">
-        <p class="muted">
-          Tu carrito está vacío.
-        </p>
-      </div>
-      <div class="totals">
-        <span>
-          Productos
-        </span>
-        <b id="subtotal">
-          $0.00
-        </b>
-        <span>
-          Envío
-        </span>
-        <b id="delivery">
-          $0.00
-        </b>
-        <strong>
-          Total
-        </strong>
-        <strong
-          id="total"
-          class="total"
-        >
-          $0.00
-        </strong>
-      </div>
-      <!-- DATOS DEL CLIENTE -->
-      <div class="customer">
-        <h3>
-          📍 Datos de entrega
-        </h3>
-        <label>
-          Nombre
-          <input
-            id="customerName"
-            type="text"
-            placeholder="Tu nombre"
-          >
-        </label>
-        <label>
-          Teléfono
-          <input
-            id="customerPhone"
-            type="tel"
-            placeholder="Tu teléfono"
-          >
-        </label>
-        <label>
-          Dirección
-          <input
-            id="customerAddress"
-            type="text"
-            placeholder="Calle, número y colonia"
-          >
-        </label>
-        <label>
-          Referencia
-          <textarea
-            id="customerReference"
-            placeholder="Ej. casa azul, frente al parque"
-          ></textarea>
-        </label>
-        <label>
-          Forma de pago
-          <select id="payment">
-            <option>
-              Efectivo
-            </option>
-            <option>
-              Tarjeta (demo)
-            </option>
-          </select>
-        </label>
-        <button
-          class="confirm"
-          onclick="confirmOrder()"
-        >
-          Confirmar pedido
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- =====================================
-     NEGOCIO
-====================================== -->
-<section
-  id="negocio"
-  class="panel"
->
-  <h1>
-    🏪 Portal del negocio
-  </h1>
-  <p class="muted">
-    Para administrar JMA Hermanos
-    utiliza su portal.
-  </p>
-  <a
-    href="negocio.html"
-    style="
-      display:inline-block;
-      margin-top:10px;
-      padding:11px 16px;
-      background:#5b35d5;
-      color:white;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:700;
-    "
-  >
-    Abrir portal JMA Hermanos
-  </a>
-</section>
-<!-- =====================================
-     REPARTIDOR
-====================================== -->
-<section
-  id="repartidor"
-  class="panel"
->
-  <h1>
-    🛵 Portal del repartidor
-  </h1>
-  <div id="riderOrders"></div>
-</section>
-<!-- =====================================
-     ADMIN
-====================================== -->
-<section
-  id="admin"
-  class="panel"
->
-  <h1>
-    📊 Administración
-  </h1>
-  <div id="adminStats"></div>
-  <h2>
-    💰 Movimientos
-  </h2>
-  <div id="ledger"></div>
-</section>
+
+  </section>
+
+</main>
+
+
 <script>
-/*
-================================================
-NAVEGACIÓN
-================================================
-*/
-document
-  .querySelectorAll(".tab")
-  .forEach(
-    button => {
-      button.onclick =
-        () => {
-          document
-            .querySelectorAll(".tab")
-            .forEach(
-              item =>
-                item.classList
-                  .remove("active")
-            );
-          document
-            .querySelectorAll(".panel")
-            .forEach(
-              panel =>
-                panel.classList
-                  .remove("active")
-            );
-          button.classList
-            .add("active");
-          document
-            .getElementById(
-              button.dataset.tab
-            )
-            .classList
-            .add("active");
-        };
-    }
-  );
-/*
-================================================
-CONFIGURACIÓN
-================================================
-*/
-const PRODUCTS_KEY =
-  "entregaya-jma-products";
-const ORDERS_KEY =
-  "entregaya-demo";
-let cart = [];
-/*
-================================================
-MONEDA
-================================================
-*/
-function money(value){
-  return "$" +
-    Number(value || 0)
-      .toFixed(2);
+
+const STORAGE_PRODUCTOS = "entregaya-jma-products";
+const STORAGE_PEDIDOS = "entregaya-demo";
+
+let carrito = [];
+
+
+/* =========================
+   NAVEGACIÓN
+========================= */
+
+function ocultarTodo() {
+  document.getElementById("inicio").classList.add("hidden");
+  document.getElementById("jma").classList.add("hidden");
+  document.getElementById("mensaje").classList.add("hidden");
+  document.getElementById("exito").classList.add("hidden");
 }
-/*
-================================================
-ABRIR JMA
-================================================
-*/
-function openStore(){
-  document
-    .getElementById(
-      "businessList"
-    )
-    .style.display =
-      "none";
-  document
-    .getElementById(
-      "store"
-    )
-    .classList
-    .add("active");
-  loadProducts();
+
+
+function mostrarInicio() {
+  ocultarTodo();
+  document.getElementById("inicio").classList.remove("hidden");
 }
-function closeStore(){
-  document
-    .getElementById(
-      "businessList"
-    )
-    .style.display =
-      "block";
-  document
-    .getElementById(
-      "store"
-    )
-    .classList
-    .remove("active");
+
+
+function mostrarMensaje(nombre) {
+  ocultarTodo();
+
+  document.getElementById("tituloMensaje").textContent =
+    nombre;
+
+  document.getElementById("mensaje").classList.remove("hidden");
 }
-/*
-================================================
-CARGAR PRODUCTOS DE JMA
-================================================
-*/
-function loadProducts(){
-  const saved =
-    localStorage.getItem(
-      PRODUCTS_KEY
+
+
+/* =========================
+   JMA
+========================= */
+
+function abrirJMA() {
+
+  ocultarTodo();
+
+  document.getElementById("jma").classList.remove("hidden");
+
+  cargarProductos();
+}
+
+
+function obtenerProductos() {
+
+  let productos = localStorage.getItem(STORAGE_PRODUCTOS);
+
+  if (!productos) {
+
+    productos = [
+
+      {
+        id: "jma-1",
+        name: "Ensalada César",
+        description: "Lechuga, pollo, jitomate, queso y aderezo César.",
+        price: 80,
+        category: "Ensaladas",
+        active: true
+      },
+
+      {
+        id: "jma-2",
+        name: "Ensalada especial",
+        description: "Ensalada preparada con ingredientes frescos.",
+        price: 85,
+        category: "Ensaladas",
+        active: true
+      },
+
+      {
+        id: "jma-3",
+        name: "Sándwich de pollo",
+        description: "Pan, pollo, lechuga, jitomate y aderezo.",
+        price: 75,
+        category: "Sándwiches",
+        active: true
+      },
+
+      {
+        id: "jma-4",
+        name: "Jugo natural",
+        description: "Jugo natural preparado al momento.",
+        price: 45,
+        category: "Jugos",
+        active: true
+      },
+
+      {
+        id: "jma-5",
+        name: "Licuado de fresa",
+        description: "Licuado de fresa preparado al momento.",
+        price: 55,
+        category: "Licuados",
+        active: true
+      }
+
+    ];
+
+    localStorage.setItem(
+      STORAGE_PRODUCTOS,
+      JSON.stringify(productos)
     );
-  let products = [];
-  if(saved){
-    try{
-      products =
-        JSON.parse(saved);
-    }catch(error){
-      products = [];
-    }
   }
-  /*
-   * Solo mostramos productos
-   * disponibles.
-   */
-  products =
-    products.filter(
-      product =>
-        product.active
-    );
-  const container =
-    document.getElementById(
-      "productGrid"
-    );
-  if(
-    products.length === 0
-  ){
-    container.innerHTML = `
-      <div class="product-card">
-        <h3>
-          JMA Hermanos
-        </h3>
-        <p class="muted">
-          Por el momento no hay
-          productos disponibles.
-        </p>
+
+  return JSON.parse(productos);
+}
+
+
+function cargarProductos() {
+
+  const contenedor =
+    document.getElementById("productosJMA");
+
+  const productos =
+    obtenerProductos().filter(p => p.active !== false);
+
+  if (!productos.length) {
+
+    contenedor.innerHTML = `
+      <div class="empty">
+        <h3>No hay productos disponibles</h3>
+        <p>JMA Hermanos todavía no tiene productos activos.</p>
       </div>
     `;
+
     return;
   }
-  container.innerHTML =
-    products.map(
-      product => `
-        <div
-          class="product-card"
-          data-id="${product.id}"
-        >
-          <h3>
-            ${product.name}
-          </h3>
-          <div class="description">
-            ${
-              product.description ||
-              "Producto de JMA Hermanos."
-            }
-          </div>
-          <div class="price">
-            ${money(product.price)}
-          </div>
-          <div class="quantity">
-            <button
-              onclick="changeQuantity(
-                ${product.id},
-                -1
-              )"
-            >
-              −
-            </button>
-            <span
-              id="qty-${product.id}"
-            >
-              1
-            </span>
-            <button
-              onclick="changeQuantity(
-                ${product.id},
-                1
-              )"
-            >
-              +
-            </button>
-          </div>
-          <input
-            id="special-${product.id}"
-            class="special-input"
-            type="text"
-            placeholder="Petición especial (opcional)"
-          >
-          <button
-            class="add"
-            onclick="addToCart(${product.id})"
-          >
-            + Agregar al pedido
-          </button>
-        </div>
-      `
-    ).join("");
+
+
+  contenedor.innerHTML = productos.map(producto => `
+
+    <div class="product">
+
+      <h4>${producto.name}</h4>
+
+      <p>${producto.description || ""}</p>
+
+      <div class="price">
+        $${Number(producto.price).toFixed(2)}
+      </div>
+
+      <div class="quantity">
+
+        <button onclick="cambiarCantidad('${producto.id}', -1)">
+          −
+        </button>
+
+        <strong id="cantidad-${producto.id}">0</strong>
+
+        <button onclick="cambiarCantidad('${producto.id}', 1)">
+          +
+        </button>
+
+      </div>
+
+      <textarea
+        id="nota-${producto.id}"
+        placeholder="¿Alguna indicación especial?"
+      ></textarea>
+
+      <button onclick="agregarAlCarrito('${producto.id}')">
+        Agregar al pedido
+      </button>
+
+    </div>
+
+  `).join("");
 }
-/*
-================================================
-CANTIDAD
-================================================
-*/
-function changeQuantity(
-  id,
-  change
-){
-  const element =
-    document.getElementById(
-      "qty-" + id
-    );
-  if(!element)
-    return;
-  let quantity =
-    Number(
-      element.textContent
-    ) || 1;
-  quantity += change;
-  if(quantity < 1)
-    quantity = 1;
-  element.textContent =
-    quantity;
+
+
+/* =========================
+   CANTIDADES
+========================= */
+
+function cambiarCantidad(id, cambio) {
+
+  const elemento =
+    document.getElementById("cantidad-" + id);
+
+  let cantidad =
+    Number(elemento.textContent);
+
+  cantidad += cambio;
+
+  if (cantidad < 0) {
+    cantidad = 0;
+  }
+
+  elemento.textContent = cantidad;
 }
-/*
-================================================
-AGREGAR AL CARRITO
-================================================
-*/
-function addToCart(id){
-  const saved =
-    localStorage.getItem(
-      PRODUCTS_KEY
-    );
-  if(!saved)
-    return;
-  const products =
-    JSON.parse(saved);
-  const product =
-    products.find(
-      item =>
-        item.id === id
-    );
-  if(!product)
-    return;
-  const quantity =
+
+
+/* =========================
+   CARRITO
+========================= */
+
+function agregarAlCarrito(id) {
+
+  const productos = obtenerProductos();
+
+  const producto =
+    productos.find(p => p.id === id);
+
+  if (!producto) return;
+
+
+  const cantidad =
     Number(
-      document.getElementById(
-        "qty-" + id
-      ).textContent
-    ) || 1;
-  const specialRequest =
-    document.getElementById(
-      "special-" + id
-    ).value.trim();
-  /*
-   * Si ya existe el mismo producto,
-   * aumentamos cantidad.
-   */
-  const existing =
-    cart.find(
-      item =>
-        item.productId === id &&
-        item.specialRequest ===
-          specialRequest
+      document.getElementById("cantidad-" + id).textContent
     );
-  if(existing){
-    existing.quantity +=
-      quantity;
-  }else{
-    cart.push({
-      productId:
-        product.id,
-      business:
-        "JMA Hermanos",
-      name:
-        product.name,
-      price:
-        Number(product.price),
-      quantity:
-        quantity,
-      specialRequest:
-        specialRequest
+
+  if (cantidad <= 0) {
+
+    alert("Primero selecciona una cantidad.");
+
+    return;
+  }
+
+
+  const nota =
+    document.getElementById("nota-" + id).value;
+
+
+  const existente =
+    carrito.find(item => item.productId === id);
+
+
+  if (existente) {
+
+    existente.quantity = cantidad;
+    existente.specialRequest = nota;
+
+  } else {
+
+    carrito.push({
+
+      productId: producto.id,
+
+      business: "JMA Hermanos",
+
+      name: producto.name,
+
+      price: Number(producto.price),
+
+      quantity: cantidad,
+
+      specialRequest: nota
+
     });
+
   }
-  renderCart();
-  /*
-   * Regresar cantidad a 1.
-   */
-  document.getElementById(
-    "qty-" + id
-  ).textContent =
-    "1";
-  document.getElementById(
-    "special-" + id
-  ).value =
-    "";
-  alert(
-    "Producto agregado al pedido."
-  );
+
+
+  actualizarCarrito();
+
+  alert("Producto agregado al pedido.");
 }
-/*
-================================================
-CARRITO
-================================================
-*/
-function renderCart(){
-  const container =
-    document.getElementById(
-      "cartItems"
-    );
-  if(
-    cart.length === 0
-  ){
-    container.innerHTML = `
-      <p class="muted">
-        Tu carrito está vacío.
-      </p>
-    `;
-  }else{
-    container.innerHTML =
-      cart.map(
-        (item,index) => `
-          <div class="cart-item">
-            <div class="cart-item-top">
-              <div>
-                <b>
-                  ${item.name}
-                </b>
-                <br>
-                ${item.quantity}
-                ×
-                ${money(item.price)}
-              </div>
-              <button
-                class="remove"
-                onclick="removeCartItem(${index})"
-              >
-                ×
-              </button>
-            </div>
-            ${
-              item.specialRequest
-              ?
-              `
-                <div class="cart-special">
-                  📝
-                  ${item.specialRequest}
-                </div>
-              `
-              :
-              ""
-            }
-          </div>
-        `
-      ).join("");
+
+
+function actualizarCarrito() {
+
+  const contenedor =
+    document.getElementById("carritoItems");
+
+  const carritoBox =
+    document.getElementById("carrito");
+
+
+  if (!carrito.length) {
+
+    carritoBox.classList.add("hidden");
+
+    return;
   }
+
+
+  carritoBox.classList.remove("hidden");
+
+
+  contenedor.innerHTML =
+    carrito.map((item, index) => `
+
+      <div class="cart-item">
+
+        <strong>${item.name}</strong>
+
+        <br>
+
+        ${item.quantity} × $${item.price.toFixed(2)}
+
+        <br>
+
+        ${item.specialRequest
+          ? "Nota: " + item.specialRequest
+          : ""}
+
+        <br><br>
+
+        <button onclick="eliminarDelCarrito(${index})">
+          Eliminar
+        </button>
+
+      </div>
+
+    `).join("");
+
+
   const subtotal =
-    cart.reduce(
-      (
-        total,
-        item
-      ) =>
-        total +
-        (
-          item.price *
-          item.quantity
-        ),
+    carrito.reduce(
+      (total, item) =>
+        total + item.price * item.quantity,
       0
     );
-  const delivery =
-    cart.length > 0
-      ? 30
-      : 0;
-  document.getElementById(
-    "subtotal"
-  ).textContent =
-    money(subtotal);
-  document.getElementById(
-    "delivery"
-  ).textContent =
-    money(delivery);
-  document.getElementById(
-    "total"
-  ).textContent =
-    money(
-      subtotal +
-      delivery
-    );
+
+
+  document.getElementById("subtotal").textContent =
+    subtotal.toFixed(2);
+
+
+  document.getElementById("total").textContent =
+    (subtotal + 30).toFixed(2);
 }
-/*
-================================================
-ELIMINAR CARRITO
-================================================
-*/
-function removeCartItem(index){
-  cart.splice(
-    index,
-    1
-  );
-  renderCart();
+
+
+function eliminarDelCarrito(index) {
+
+  carrito.splice(index, 1);
+
+  actualizarCarrito();
 }
-/*
-================================================
-CONFIRMAR PEDIDO
-================================================
-*/
-function confirmOrder(){
-  if(
-    cart.length === 0
-  ){
-    alert(
-      "Agrega al menos un producto."
-    );
+
+
+/* =========================
+   PEDIDO
+========================= */
+
+function confirmarPedido() {
+
+  if (!carrito.length) {
+
+    alert("Tu carrito está vacío.");
+
     return;
   }
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
-  const address =
-    document.getElementById(
-      "customerAddress"
-    ).value.trim();
-  const reference =
-    document.getElementById(
-      "customerReference"
-    ).value.trim();
-  if(!name){
+
+
+  const nombre =
+    document.getElementById("nombre").value.trim();
+
+  const telefono =
+    document.getElementById("telefono").value.trim();
+
+  const direccion =
+    document.getElementById("direccion").value.trim();
+
+  const referencia =
+    document.getElementById("referencia").value.trim();
+
+  const pago =
+    document.getElementById("pago").value;
+
+
+  if (!nombre || !telefono || !direccion) {
+
     alert(
-      "Escribe tu nombre."
+      "Por favor completa nombre, teléfono y dirección."
     );
+
     return;
   }
-  if(!phone){
-    alert(
-      "Escribe tu teléfono."
-    );
-    return;
-  }
-  if(!address){
-    alert(
-      "Escribe tu dirección."
-    );
-    return;
-  }
+
+
   const subtotal =
-    cart.reduce(
-      (
-        total,
-        item
-      ) =>
-        total +
-        (
-          item.price *
-          item.quantity
-        ),
+    carrito.reduce(
+      (total, item) =>
+        total + item.price * item.quantity,
       0
     );
-  const delivery =
-    30;
-  const total =
-    subtotal +
-    delivery;
-  const order = {
+
+
+  const pedido = {
+
     id:
       "EY-" +
-      Date.now()
-        .toString()
-        .slice(-6),
+      Math.floor(
+        100000 +
+        Math.random() * 900000
+      ),
+
     business:
       "JMA Hermanos",
+
     items:
-      cart.map(
-        item => ({
-          ...item
-        })
-      ),
+      [...carrito],
+
     subtotal:
       subtotal,
+
     delivery:
-      delivery,
-    /*
-     * Por ahora la comisión
-     * es interna de EntregaYa.
-     */
+      30,
+
     commission:
       subtotal * 0.10,
+
     total:
-      total,
+      subtotal + 30,
+
     payment:
-      document.getElementById(
-        "payment"
-      ).value,
-    customer:{
+      pago,
+
+    customer: {
+
       name:
-        name,
+        nombre,
+
       phone:
-        phone,
+        telefono,
+
       address:
-        address,
+        direccion,
+
       reference:
-        reference
+        referencia
+
     },
+
     status:
       "Nuevo",
+
     rider:
       null,
+
     date:
-      new Date()
-        .toLocaleString(
-          "es-MX"
-        )
+      new Date().toISOString()
+
   };
-  let data;
-  const saved =
-    localStorage.getItem(
-      ORDERS_KEY
+
+
+  const pedidosGuardados =
+    JSON.parse(
+      localStorage.getItem(STORAGE_PEDIDOS) || "[]"
     );
-  if(saved){
-    try{
-      data =
-        JSON.parse(saved);
-    }catch(error){
-      data = {
-        cart:[],
-        orders:[]
-      };
-    }
-  }else{
-    data = {
-      cart:[],
-      orders:[]
-    };
-  }
-  if(
-    !Array.isArray(
-      data.orders
-    )
-  ){
-    data.orders = [];
-  }
-  data.orders.unshift(
-    order
-  );
+
+
+  pedidosGuardados.push(pedido);
+
+
   localStorage.setItem(
-    ORDERS_KEY,
-    JSON.stringify(data)
+    STORAGE_PEDIDOS,
+    JSON.stringify(pedidosGuardados)
   );
-  cart = [];
-  renderCart();
-  document.getElementById(
-    "customerName"
-  ).value = "";
-  document.getElementById(
-    "customerPhone"
-  ).value = "";
-  document.getElementById(
-    "customerAddress"
-  ).value = "";
-  document.getElementById(
-    "customerReference"
-  ).value = "";
-  alert(
-    "¡Pedido creado! " +
-    order.id
-  );
+
+
+  document.getElementById("numeroPedido").textContent =
+    pedido.id;
+
+
+  carrito = [];
+
+  ocultarTodo();
+
+  document.getElementById("exito").classList.remove("hidden");
+
 }
-/*
-================================================
-INICIAR
-================================================
-*/
-renderCart();
+
 </script>
+
 </body>
 </html>
