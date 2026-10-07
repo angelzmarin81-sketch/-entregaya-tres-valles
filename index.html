@@ -1,192 +1,1191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 <title>EntregaYa · Tres Valles</title>
-<link rel="stylesheet" href="styles.css">
+<style>
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  background:#f5f7fb;
+  color:#172033;
+}
+/* HEADER */
+header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.logo{
+  color:#5b35d5;
+  font-size:24px;
+  font-weight:800;
+}
+.location{
+  color:#6b7280;
+  font-size:13px;
+}
+nav{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+}
+.tab{
+  border:0;
+  background:#f0f1f6;
+  padding:9px 12px;
+  border-radius:9px;
+  white-space:nowrap;
+  cursor:pointer;
+  font-weight:600;
+}
+.tab.active{
+  background:#5b35d5;
+  color:#fff;
+}
+/* PANELES */
+.panel{
+  display:none;
+  max-width:1150px;
+  margin:auto;
+  padding:28px 5%;
+}
+.panel.active{
+  display:block;
+}
+/* HERO */
+.hero{
+  background:
+    linear-gradient(
+      135deg,
+      #5b35d5,
+      #8c68ed
+    );
+  color:#fff;
+  border-radius:22px;
+  padding:30px;
+  margin-bottom:24px;
+}
+.hero small{
+  letter-spacing:1.5px;
+  opacity:.8;
+}
+.hero h1{
+  font-size:34px;
+  margin:8px 0;
+}
+.hero p{
+  margin:0;
+  opacity:.9;
+}
+/* NEGOCIOS */
+.business-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(260px,1fr)
+    );
+  gap:16px;
+}
+.business-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:20px;
+  cursor:pointer;
+  transition:.15s;
+}
+.business-card:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.07);
+}
+.business-icon{
+  font-size:34px;
+  margin-bottom:8px;
+}
+.business-card h3{
+  margin:5px 0;
+}
+.business-card p{
+  color:#6b7280;
+  font-size:14px;
+}
+/* NEGOCIO SELECCIONADO */
+.store{
+  display:none;
+}
+.store.active{
+  display:block;
+}
+.back{
+  border:0;
+  background:#fff;
+  padding:9px 13px;
+  border-radius:9px;
+  cursor:pointer;
+  margin-bottom:15px;
+  font-weight:700;
+}
+/* PRODUCTOS */
+.product-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(250px,1fr)
+    );
+  gap:15px;
+}
+.product-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:17px;
+}
+.product-card h3{
+  margin:0 0 7px;
+}
+.description{
+  color:#6b7280;
+  font-size:14px;
+  line-height:1.5;
+  min-height:42px;
+}
+.price{
+  font-size:20px;
+  font-weight:800;
+  margin:10px 0;
+}
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:10px 0;
+}
+.quantity button{
+  border:0;
+  background:#eee;
+  width:34px;
+  height:34px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:18px;
+}
+.quantity span{
+  min-width:25px;
+  text-align:center;
+  font-weight:700;
+}
+.special-input{
+  width:100%;
+  padding:9px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font:inherit;
+  margin-bottom:9px;
+}
+.add{
+  width:100%;
+  border:0;
+  background:#5b35d5;
+  color:white;
+  padding:10px;
+  border-radius:9px;
+  font-weight:700;
+  cursor:pointer;
+}
+/* CARRITO */
+.cart{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:20px;
+  margin-top:24px;
+}
+.cart h2{
+  margin-top:0;
+}
+.cart-item{
+  border-top:1px solid #eee;
+  padding:12px 0;
+}
+.cart-item:first-child{
+  border-top:0;
+}
+.cart-item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+.cart-special{
+  background:#fff7ed;
+  color:#92400e;
+  padding:7px;
+  border-radius:6px;
+  margin-top:6px;
+  font-size:13px;
+}
+.remove{
+  border:0;
+  background:#fee2e2;
+  color:#991b1b;
+  border-radius:7px;
+  padding:5px 8px;
+  cursor:pointer;
+}
+.totals{
+  display:grid;
+  grid-template-columns:
+    1fr auto;
+  gap:8px;
+  border-top:1px solid #eee;
+  padding-top:15px;
+  margin-top:12px;
+}
+.total{
+  font-size:19px;
+  font-weight:800;
+}
+/* DATOS CLIENTE */
+.customer{
+  margin-top:22px;
+  border-top:1px solid #eee;
+  padding-top:18px;
+}
+.customer label{
+  display:block;
+  font-weight:600;
+  font-size:14px;
+  margin:10px 0;
+}
+.customer input,
+.customer textarea,
+.customer select{
+  width:100%;
+  margin-top:5px;
+  padding:10px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font:inherit;
+}
+.customer textarea{
+  min-height:70px;
+  resize:vertical;
+}
+.confirm{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border:0;
+  border-radius:10px;
+  background:#5b35d5;
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+/* OTROS PANELES */
+.cards{
+  display:grid;
+  gap:12px;
+}
+.card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:16px;
+}
+.status{
+  display:inline-block;
+  background:#ede9fe;
+  color:#5b35d5;
+  border-radius:20px;
+  padding:4px 9px;
+  font-size:12px;
+}
+.muted{
+  color:#6b7280;
+  font-size:14px;
+}
+/* MÓVIL */
+@media(max-width:700px){
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .panel{
+    padding:22px 4%;
+  }
+  .hero h1{
+    font-size:28px;
+  }
+}
+</style>
 </head>
-
 <body>
-
 <header>
   <div>
-    <b>EntregaYa</b>
-    <span> · Tres Valles</span>
+    <div class="logo">
+      EntregaYa
+    </div>
+    <div class="location">
+      📍 Tres Valles
+    </div>
   </div>
-
   <nav>
-    <button class="tab active" data-tab="cliente">Cliente</button>
-    <button class="tab" data-tab="negocio">Negocio</button>
-    <button class="tab" data-tab="repartidor">Repartidor</button>
-    <button class="tab" data-tab="admin">Administración</button>
+    <button
+      class="tab active"
+      data-tab="cliente"
+    >
+      🛍️ Comprar
+    </button>
+    <button
+      class="tab"
+      data-tab="negocio"
+    >
+      🏪 Negocio
+    </button>
+    <button
+      class="tab"
+      data-tab="repartidor"
+    >
+      🛵 Repartidor
+    </button>
+    <button
+      class="tab"
+      data-tab="admin"
+    >
+      📊 Administración
+    </button>
   </nav>
 </header>
-
-<main>
-
-<section id="cliente" class="panel active">
-
+<!-- =====================================
+     CLIENTE
+====================================== -->
+<section
+  id="cliente"
+  class="panel active"
+>
   <div class="hero">
-    <p class="eyebrow">DELIVERY GENERAL</p>
-    <h1>Lo que necesites, hasta tu puerta.</h1>
-    <p>Compra en negocios locales de Tres Valles.</p>
+    <small>
+      DELIVERY GENERAL
+    </small>
+    <h1>
+      Lo que necesites,
+      hasta tu puerta.
+    </h1>
+    <p>
+      Compra en negocios locales
+      de Tres Valles.
+    </p>
   </div>
-
-  <div id="businesses" class="grid"></div>
-
-  <aside class="cart">
-
-    <h2>🛒 Tu pedido</h2>
-
-    <div id="cartItems"></div>
-
-    <div class="totals">
-
-      <span>Productos</span>
-      <b id="subtotal">$0</b>
-
-      <span>Envío</span>
-      <b id="delivery">$0</b>
-
-      <span>Comisión plataforma</span>
-      <b id="commission">$0</b>
-
-      <strong>Total</strong>
-      <strong id="total">$0</strong>
-
+  <!-- LISTA DE NEGOCIOS -->
+  <div id="businessList">
+    <div class="business-grid">
+      <div
+        class="business-card"
+        onclick="openStore('JMA Hermanos')"
+      >
+        <div class="business-icon">
+          🥗
+        </div>
+        <h3>
+          JMA Hermanos
+        </h3>
+        <p>
+          Ensaladas, sándwiches,
+          jugos y licuados.
+        </p>
+        <span class="status">
+          Comida
+        </span>
+      </div>
+      <div class="business-card">
+        <div class="business-icon">
+          🛒
+        </div>
+        <h3>
+          Próximamente
+        </h3>
+        <p>
+          Más negocios locales
+          estarán disponibles.
+        </p>
+      </div>
     </div>
-
-    <h3>📍 Datos de entrega</h3>
-
-    <label>
-      Nombre
-      <input id="customerName" type="text"
-        placeholder="Nombre del cliente">
-    </label>
-
-    <label>
-      Teléfono
-      <input id="customerPhone" type="tel"
-        placeholder="Número de teléfono">
-    </label>
-
-    <label>
-      Dirección
-      <input id="customerAddress" type="text"
-        placeholder="Calle, número y colonia">
-    </label>
-
-    <label>
-      Referencia
-      <input id="customerReference" type="text"
-        placeholder="Ej. casa azul, frente al parque">
-    </label>
-
-    <label>
-      Método de pago
-
-      <select id="payment">
-        <option>Efectivo</option>
-        <option>Tarjeta (demo)</option>
-      </select>
-
-    </label>
-
-    <button class="primary" id="orderBtn">
-      Confirmar pedido
-    </button>
-
-  </aside>
-
-</section>
-
-
-<section id="negocio" class="panel">
-
-  <h1>🏪 Portal del negocio</h1>
-
-  <div id="businessOrders" class="cards"></div>
-
-</section>
-
-
-<section id="repartidor" class="panel">
-
-  <h1>🛵 Portal del repartidor</h1>
-
-  <div id="riderStats" class="stats"></div>
-
-  <div id="riderOrders" class="cards"></div>
-
-</section>
-
-
-<section id="admin" class="panel">
-
-  <h1>📊 Administración</h1>
-
-  <div id="adminStats" class="stats"></div>
-
-  <div class="sim">
-
-    <h2>Simulador de rentabilidad</h2>
-
-    <div class="formgrid">
-
-      <label>
-        Pedidos/día
-        <input id="sOrders" type="number" value="40">
-      </label>
-
-      <label>
-        Días/mes
-        <input id="sDays" type="number" value="30">
-      </label>
-
-      <label>
-        Ticket promedio
-        <input id="sTicket" type="number" value="180">
-      </label>
-
-      <label>
-        Envío al cliente
-        <input id="sDelivery" type="number" value="30">
-      </label>
-
-      <label>
-        Comisión %
-        <input id="sComm" type="number" value="10">
-      </label>
-
-      <label>
-        Costos fijos
-        <input id="sFixed" type="number" value="12000">
-      </label>
-
-    </div>
-
-    <button class="primary" id="simulate">
-      Calcular
-    </button>
-
-    <div id="profit"></div>
-
   </div>
-
-  <h2>💰 Movimientos</h2>
-
+  <!-- TIENDA -->
+  <div
+    id="store"
+    class="store"
+  >
+    <button
+      class="back"
+      onclick="closeStore()"
+    >
+      ← Volver a negocios
+    </button>
+    <div class="hero">
+      <small>
+        NEGOCIO
+      </small>
+      <h1>
+        JMA Hermanos
+      </h1>
+      <p>
+        Ensaladas, sándwiches,
+        jugos y licuados.
+      </p>
+    </div>
+    <div
+      id="productGrid"
+      class="product-grid"
+    ></div>
+    <!-- CARRITO -->
+    <div class="cart">
+      <h2>
+        🛒 Tu pedido
+      </h2>
+      <div id="cartItems">
+        <p class="muted">
+          Tu carrito está vacío.
+        </p>
+      </div>
+      <div class="totals">
+        <span>
+          Productos
+        </span>
+        <b id="subtotal">
+          $0.00
+        </b>
+        <span>
+          Envío
+        </span>
+        <b id="delivery">
+          $0.00
+        </b>
+        <strong>
+          Total
+        </strong>
+        <strong
+          id="total"
+          class="total"
+        >
+          $0.00
+        </strong>
+      </div>
+      <!-- DATOS DEL CLIENTE -->
+      <div class="customer">
+        <h3>
+          📍 Datos de entrega
+        </h3>
+        <label>
+          Nombre
+          <input
+            id="customerName"
+            type="text"
+            placeholder="Tu nombre"
+          >
+        </label>
+        <label>
+          Teléfono
+          <input
+            id="customerPhone"
+            type="tel"
+            placeholder="Tu teléfono"
+          >
+        </label>
+        <label>
+          Dirección
+          <input
+            id="customerAddress"
+            type="text"
+            placeholder="Calle, número y colonia"
+          >
+        </label>
+        <label>
+          Referencia
+          <textarea
+            id="customerReference"
+            placeholder="Ej. casa azul, frente al parque"
+          ></textarea>
+        </label>
+        <label>
+          Forma de pago
+          <select id="payment">
+            <option>
+              Efectivo
+            </option>
+            <option>
+              Tarjeta (demo)
+            </option>
+          </select>
+        </label>
+        <button
+          class="confirm"
+          onclick="confirmOrder()"
+        >
+          Confirmar pedido
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- =====================================
+     NEGOCIO
+====================================== -->
+<section
+  id="negocio"
+  class="panel"
+>
+  <h1>
+    🏪 Portal del negocio
+  </h1>
+  <p class="muted">
+    Para administrar JMA Hermanos
+    utiliza su portal.
+  </p>
+  <a
+    href="negocio.html"
+    style="
+      display:inline-block;
+      margin-top:10px;
+      padding:11px 16px;
+      background:#5b35d5;
+      color:white;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+    "
+  >
+    Abrir portal JMA Hermanos
+  </a>
+</section>
+<!-- =====================================
+     REPARTIDOR
+====================================== -->
+<section
+  id="repartidor"
+  class="panel"
+>
+  <h1>
+    🛵 Portal del repartidor
+  </h1>
+  <div id="riderOrders"></div>
+</section>
+<!-- =====================================
+     ADMIN
+====================================== -->
+<section
+  id="admin"
+  class="panel"
+>
+  <h1>
+    📊 Administración
+  </h1>
+  <div id="adminStats"></div>
+  <h2>
+    💰 Movimientos
+  </h2>
   <div id="ledger"></div>
-
-  <button class="danger" id="reset">
-    Reiniciar demo
-  </button>
-
 </section>
-
-</main>
-
-<script src="app.js"></script>
-
+<script>
+/*
+================================================
+NAVEGACIÓN
+================================================
+*/
+document
+  .querySelectorAll(".tab")
+  .forEach(
+    button => {
+      button.onclick =
+        () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach(
+              item =>
+                item.classList
+                  .remove("active")
+            );
+          document
+            .querySelectorAll(".panel")
+            .forEach(
+              panel =>
+                panel.classList
+                  .remove("active")
+            );
+          button.classList
+            .add("active");
+          document
+            .getElementById(
+              button.dataset.tab
+            )
+            .classList
+            .add("active");
+        };
+    }
+  );
+/*
+================================================
+CONFIGURACIÓN
+================================================
+*/
+const PRODUCTS_KEY =
+  "entregaya-jma-products";
+const ORDERS_KEY =
+  "entregaya-demo";
+let cart = [];
+/*
+================================================
+MONEDA
+================================================
+*/
+function money(value){
+  return "$" +
+    Number(value || 0)
+      .toFixed(2);
+}
+/*
+================================================
+ABRIR JMA
+================================================
+*/
+function openStore(){
+  document
+    .getElementById(
+      "businessList"
+    )
+    .style.display =
+      "none";
+  document
+    .getElementById(
+      "store"
+    )
+    .classList
+    .add("active");
+  loadProducts();
+}
+function closeStore(){
+  document
+    .getElementById(
+      "businessList"
+    )
+    .style.display =
+      "block";
+  document
+    .getElementById(
+      "store"
+    )
+    .classList
+    .remove("active");
+}
+/*
+================================================
+CARGAR PRODUCTOS DE JMA
+================================================
+*/
+function loadProducts(){
+  const saved =
+    localStorage.getItem(
+      PRODUCTS_KEY
+    );
+  let products = [];
+  if(saved){
+    try{
+      products =
+        JSON.parse(saved);
+    }catch(error){
+      products = [];
+    }
+  }
+  /*
+   * Solo mostramos productos
+   * disponibles.
+   */
+  products =
+    products.filter(
+      product =>
+        product.active
+    );
+  const container =
+    document.getElementById(
+      "productGrid"
+    );
+  if(
+    products.length === 0
+  ){
+    container.innerHTML = `
+      <div class="product-card">
+        <h3>
+          JMA Hermanos
+        </h3>
+        <p class="muted">
+          Por el momento no hay
+          productos disponibles.
+        </p>
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML =
+    products.map(
+      product => `
+        <div
+          class="product-card"
+          data-id="${product.id}"
+        >
+          <h3>
+            ${product.name}
+          </h3>
+          <div class="description">
+            ${
+              product.description ||
+              "Producto de JMA Hermanos."
+            }
+          </div>
+          <div class="price">
+            ${money(product.price)}
+          </div>
+          <div class="quantity">
+            <button
+              onclick="changeQuantity(
+                ${product.id},
+                -1
+              )"
+            >
+              −
+            </button>
+            <span
+              id="qty-${product.id}"
+            >
+              1
+            </span>
+            <button
+              onclick="changeQuantity(
+                ${product.id},
+                1
+              )"
+            >
+              +
+            </button>
+          </div>
+          <input
+            id="special-${product.id}"
+            class="special-input"
+            type="text"
+            placeholder="Petición especial (opcional)"
+          >
+          <button
+            class="add"
+            onclick="addToCart(${product.id})"
+          >
+            + Agregar al pedido
+          </button>
+        </div>
+      `
+    ).join("");
+}
+/*
+================================================
+CANTIDAD
+================================================
+*/
+function changeQuantity(
+  id,
+  change
+){
+  const element =
+    document.getElementById(
+      "qty-" + id
+    );
+  if(!element)
+    return;
+  let quantity =
+    Number(
+      element.textContent
+    ) || 1;
+  quantity += change;
+  if(quantity < 1)
+    quantity = 1;
+  element.textContent =
+    quantity;
+}
+/*
+================================================
+AGREGAR AL CARRITO
+================================================
+*/
+function addToCart(id){
+  const saved =
+    localStorage.getItem(
+      PRODUCTS_KEY
+    );
+  if(!saved)
+    return;
+  const products =
+    JSON.parse(saved);
+  const product =
+    products.find(
+      item =>
+        item.id === id
+    );
+  if(!product)
+    return;
+  const quantity =
+    Number(
+      document.getElementById(
+        "qty-" + id
+      ).textContent
+    ) || 1;
+  const specialRequest =
+    document.getElementById(
+      "special-" + id
+    ).value.trim();
+  /*
+   * Si ya existe el mismo producto,
+   * aumentamos cantidad.
+   */
+  const existing =
+    cart.find(
+      item =>
+        item.productId === id &&
+        item.specialRequest ===
+          specialRequest
+    );
+  if(existing){
+    existing.quantity +=
+      quantity;
+  }else{
+    cart.push({
+      productId:
+        product.id,
+      business:
+        "JMA Hermanos",
+      name:
+        product.name,
+      price:
+        Number(product.price),
+      quantity:
+        quantity,
+      specialRequest:
+        specialRequest
+    });
+  }
+  renderCart();
+  /*
+   * Regresar cantidad a 1.
+   */
+  document.getElementById(
+    "qty-" + id
+  ).textContent =
+    "1";
+  document.getElementById(
+    "special-" + id
+  ).value =
+    "";
+  alert(
+    "Producto agregado al pedido."
+  );
+}
+/*
+================================================
+CARRITO
+================================================
+*/
+function renderCart(){
+  const container =
+    document.getElementById(
+      "cartItems"
+    );
+  if(
+    cart.length === 0
+  ){
+    container.innerHTML = `
+      <p class="muted">
+        Tu carrito está vacío.
+      </p>
+    `;
+  }else{
+    container.innerHTML =
+      cart.map(
+        (item,index) => `
+          <div class="cart-item">
+            <div class="cart-item-top">
+              <div>
+                <b>
+                  ${item.name}
+                </b>
+                <br>
+                ${item.quantity}
+                ×
+                ${money(item.price)}
+              </div>
+              <button
+                class="remove"
+                onclick="removeCartItem(${index})"
+              >
+                ×
+              </button>
+            </div>
+            ${
+              item.specialRequest
+              ?
+              `
+                <div class="cart-special">
+                  📝
+                  ${item.specialRequest}
+                </div>
+              `
+              :
+              ""
+            }
+          </div>
+        `
+      ).join("");
+  }
+  const subtotal =
+    cart.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        (
+          item.price *
+          item.quantity
+        ),
+      0
+    );
+  const delivery =
+    cart.length > 0
+      ? 30
+      : 0;
+  document.getElementById(
+    "subtotal"
+  ).textContent =
+    money(subtotal);
+  document.getElementById(
+    "delivery"
+  ).textContent =
+    money(delivery);
+  document.getElementById(
+    "total"
+  ).textContent =
+    money(
+      subtotal +
+      delivery
+    );
+}
+/*
+================================================
+ELIMINAR CARRITO
+================================================
+*/
+function removeCartItem(index){
+  cart.splice(
+    index,
+    1
+  );
+  renderCart();
+}
+/*
+================================================
+CONFIRMAR PEDIDO
+================================================
+*/
+function confirmOrder(){
+  if(
+    cart.length === 0
+  ){
+    alert(
+      "Agrega al menos un producto."
+    );
+    return;
+  }
+  const name =
+    document.getElementById(
+      "customerName"
+    ).value.trim();
+  const phone =
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+  const address =
+    document.getElementById(
+      "customerAddress"
+    ).value.trim();
+  const reference =
+    document.getElementById(
+      "customerReference"
+    ).value.trim();
+  if(!name){
+    alert(
+      "Escribe tu nombre."
+    );
+    return;
+  }
+  if(!phone){
+    alert(
+      "Escribe tu teléfono."
+    );
+    return;
+  }
+  if(!address){
+    alert(
+      "Escribe tu dirección."
+    );
+    return;
+  }
+  const subtotal =
+    cart.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        (
+          item.price *
+          item.quantity
+        ),
+      0
+    );
+  const delivery =
+    30;
+  const total =
+    subtotal +
+    delivery;
+  const order = {
+    id:
+      "EY-" +
+      Date.now()
+        .toString()
+        .slice(-6),
+    business:
+      "JMA Hermanos",
+    items:
+      cart.map(
+        item => ({
+          ...item
+        })
+      ),
+    subtotal:
+      subtotal,
+    delivery:
+      delivery,
+    /*
+     * Por ahora la comisión
+     * es interna de EntregaYa.
+     */
+    commission:
+      subtotal * 0.10,
+    total:
+      total,
+    payment:
+      document.getElementById(
+        "payment"
+      ).value,
+    customer:{
+      name:
+        name,
+      phone:
+        phone,
+      address:
+        address,
+      reference:
+        reference
+    },
+    status:
+      "Nuevo",
+    rider:
+      null,
+    date:
+      new Date()
+        .toLocaleString(
+          "es-MX"
+        )
+  };
+  let data;
+  const saved =
+    localStorage.getItem(
+      ORDERS_KEY
+    );
+  if(saved){
+    try{
+      data =
+        JSON.parse(saved);
+    }catch(error){
+      data = {
+        cart:[],
+        orders:[]
+      };
+    }
+  }else{
+    data = {
+      cart:[],
+      orders:[]
+    };
+  }
+  if(
+    !Array.isArray(
+      data.orders
+    )
+  ){
+    data.orders = [];
+  }
+  data.orders.unshift(
+    order
+  );
+  localStorage.setItem(
+    ORDERS_KEY,
+    JSON.stringify(data)
+  );
+  cart = [];
+  renderCart();
+  document.getElementById(
+    "customerName"
+  ).value = "";
+  document.getElementById(
+    "customerPhone"
+  ).value = "";
+  document.getElementById(
+    "customerAddress"
+  ).value = "";
+  document.getElementById(
+    "customerReference"
+  ).value = "";
+  alert(
+    "¡Pedido creado! " +
+    order.id
+  );
+}
+/*
+================================================
+INICIAR
+================================================
+*/
+renderCart();
+</script>
 </body>
 </html>
