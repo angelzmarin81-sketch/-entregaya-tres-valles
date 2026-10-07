@@ -1,0 +1,7 @@
+CREATE TABLE riders (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120),
+  phone VARCHAR(40),
+  status VARCHAR(40),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,7 @@
+CREATE TABLE businesses (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120),
+  category VARCHAR(60),
+  status VARCHAR(30),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

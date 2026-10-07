@@ -1,0 +1,12 @@
+{
+  "name": "entregaya-tres-valles",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node backend/server.js",
+    "start": "node backend/server.js",
+    "test": "echo \"No tests yet. Add tests later.\" && exit 0"
+  },
+  "description": "EntregaYa Tres Valles MVP and growth scaffolding",
+  "license": "MIT"
+}
